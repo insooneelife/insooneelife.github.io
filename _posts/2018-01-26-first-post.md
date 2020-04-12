@@ -15,7 +15,7 @@ def print_hi(name):
 print_hi('Tom')
 ​```
 
-​```
+​```c++
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
