@@ -1,59 +1,68 @@
 ---
-title: "Welcome to Jekyll!"
-date: 2017-10-20 08:26:28 -0400
-categories: jekyll update
+title: "Edge Case: Nested and Mixed Lists"
+categories:
+  - Edge Case
+tags:
+  - content
+  - css
+  - edge case
+  - lists
+  - markup
 ---
-You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
 
-To add new posts, simply add a file in the `_posts` directory that follows the convention `YYYY-MM-DD-name-of-post.ext` and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.
+Nested and mixed lists are an interesting beast. It's a corner case to make sure that
 
-Jekyll also offers powerful support for code snippets:
+* Lists within lists do not break the ordered list numbering order
+* Your list styles go deep enough.
 
-​```python
-def print_hi(name):
-  print("hello", name)
-print_hi('Tom')
-​```
+### Ordered -- Unordered -- Ordered
 
-​```python
-// Fill out your copyright notice in the Description page of Project Settings.
+1. ordered item
+2. ordered item 
+  * **unordered**
+  * **unordered** 
+    1. ordered item
+    2. ordered item
+3. ordered item
+4. ordered item
 
-#pragma once
+### Ordered -- Unordered -- Unordered
 
-#include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
-#include "Components/SkeletalMeshComponent.h"
-#include "Animation/AnimInstance.h"
-#include "MyActor.generated.h"
+1. ordered item
+2. ordered item 
+  * **unordered**
+  * **unordered** 
+    * unordered item
+    * unordered item
+3. ordered item
+4. ordered item
 
-UCLASS()
-class TESTPHYSICS_API AMyActor : public AActor
-{
-	GENERATED_BODY()
-	
-private:
-	float _pitch;
-	float _roll;
-	float _yaw;
+### Unordered -- Ordered -- Unordered
 
-public:	
-	// Sets default values for this actor's properties
-	AMyActor();
+* unordered item
+* unordered item 
+  1. ordered
+  2. ordered 
+    * unordered item
+    * unordered item
+* unordered item
+* unordered item
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+### Unordered -- Unordered -- Ordered
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+* unordered item
+* unordered item 
+  * unordered
+  * unordered 
+    1. **ordered item**
+    2. **ordered item**
+* unordered item
+* unordered item
 
-};
-​```
+### Task Lists
 
-
-Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
-
-[jekyll-docs]: https://jekyllrb.com/docs/home
-[jekyll-gh]:   https://github.com/jekyll/jekyll
-[jekyll-talk]: https://talk.jekyllrb.com/
+- [x] Finish my changes
+- [ ] Push my commits to GitHub
+- [ ] Open a pull request
+  - [ ] Follow discussions
+  - [x] Push new commits
