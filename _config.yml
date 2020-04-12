@@ -12,15 +12,9 @@ minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt"
 locale                   : "en-US"
 title                    : "Insooneelife Blog"
 title_separator          : "-"
-<<<<<<< HEAD
-subtitle                 : "Development Test Site"
-name                     : "insooneelife"
-description              : "An amazing website."
-=======
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "insooneelife"
 description              : "experience stack"
->>>>>>> b6d71bd9f061e157d369f68f64c8e0888149584e
 url                      : "https://insooneelife.github.io" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : ""
 repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
@@ -89,16 +83,11 @@ analytics:
 # Site Author
 author:
   name             : "insooneelife"
-<<<<<<< HEAD
-  avatar           : # "/assets/images/bio-photo.jpg"
-  bio              : "experience stack"
-  location         : "Korea"
-=======
+
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "experience stack"
   location         : "Korea"
   email            : "insooneelife@gmail.com"
->>>>>>> b6d71bd9f061e157d369f68f64c8e0888149584e
   links:
     - label: "Your Website"
       icon: "fas fa-fw fa-link"
@@ -281,7 +270,6 @@ defaults:
       related: true
   # _pages
   - scope:
-<<<<<<< HEAD
       path: "_pages"
       type: pages
     values:
@@ -311,12 +299,3 @@ defaults:
       layout: single
       author_profile: false
       share: true
-=======
-      path: ""
-      type: pages
-    values:
-      layout: single
-      author_profile: true
-      
-remote_theme : mmistakes/minimal-mistakes
->>>>>>> b6d71bd9f061e157d369f68f64c8e0888149584e
