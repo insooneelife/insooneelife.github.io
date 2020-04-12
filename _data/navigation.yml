@@ -18,4 +18,4 @@ sidebar-sample:
   - title: "Parent Page A"
     children:
       - title: "Child Page A1"
-        url: /Unreal/
+        url: https://insooneelife.github.io
