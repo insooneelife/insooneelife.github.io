@@ -15,12 +15,41 @@ def print_hi(name):
 print_hi('Tom')
 ​```
 
-​```c++
-#include <iostream>
-int main()
+​```
+// Fill out your copyright notice in the Description page of Project Settings.
+
+#pragma once
+
+#include "CoreMinimal.h"
+#include "GameFramework/Actor.h"
+#include "Components/SkeletalMeshComponent.h"
+#include "Animation/AnimInstance.h"
+#include "MyActor.generated.h"
+
+UCLASS()
+class TESTPHYSICS_API AMyActor : public AActor
 {
-return 0;
-}
+	GENERATED_BODY()
+	
+private:
+	float _pitch;
+	float _roll;
+	float _yaw;
+
+public:	
+	// Sets default values for this actor's properties
+	AMyActor();
+
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
+public:	
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
+};
+
 ​```
 
 
