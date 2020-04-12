@@ -4,7 +4,8 @@ categories:
   - Markup
 ---
 
-### Example
+### Referencing animation bone transform
+## Header
 
 ```c++
 #include "CoreMinimal.h"
@@ -18,16 +19,8 @@ UCLASS(minimalapi)
 class ATestPhysicsGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
-
-public:
-	const static FName ModifiedBoneLists[];
-	const static int ModifiedNumBones;
-
 public:
 	ATestPhysicsGameMode();
-
-	virtual void StartPlay() override;
-
 	FTransform GetAnimBoneTransform(FName bname, float time);
 
 private:
@@ -36,7 +29,7 @@ private:
 };
 ```
 
-### Referencing animation bone transform
+## source
 
 ```c++
 FTransform ATestPhysicsGameMode::GetAnimBoneTransform(FName bname, float time)
