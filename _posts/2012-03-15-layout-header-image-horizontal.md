@@ -1,7 +1,7 @@
 ---
-title: "Layout: Header Image (Vertical)"
+title: "Layout: Header Image (Horizontal)"
 header:
-  image: /assets/images/unsplash-image-6.jpg
+  image: /assets/images/unsplash-image-1.jpg
   caption: "Photo credit: [**Unsplash**](https://unsplash.com)"
 categories:
   - Layout
@@ -17,4 +17,4 @@ This post should display a **header image**, if the theme supports it.
 
 Non-square images can provide some unique styling issues.
 
-This post tests a vertical header image.
+This post tests a horizontal header image.
