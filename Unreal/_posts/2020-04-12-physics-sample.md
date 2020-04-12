@@ -32,7 +32,33 @@ public:
 };
 ```
 
-### Left Align
+### Referencing animation bone transform
 
-This is a paragraph. It is left aligned. Because of this, it is a bit more liberal in it's views. It's favorite color is green. Left align tends to be more eco-friendly, but it provides no concrete evidence that it really is. Even though it likes share the wealth evenly, it leaves the equal distribution up to justified alignment.
-{: style="text-align: left;"}
+```c++
+FTransform ATestPhysicsGameMode::GetAnimBoneTransform(FName b_name, float time)
+{
+	const FReferenceSkeleton& refSkel = skeleton->GetReferenceSkeleton();
+
+	time = fmod(time, ((IdleAnim->GetNumberOfFrames() - 1) / IdleAnim->GetFrameRate()));
+	if (time < 0) time = time + (IdleAnim->GetNumberOfFrames() - 1) / IdleAnim->GetFrameRate();
+	
+	//UE_LOG(LogTemp, Warning, TEXT("time: %f"), time);
+	FTransform res;
+	res.SetIdentity();
+	FName cur_body_name = b_name;
+	int32 boneIdx = refSkel.FindBoneIndex(cur_body_name);
+	while (true) 
+	{
+		if (!refSkel.IsValidIndex(boneIdx))
+		{
+			break;
+		}
+		FTransform tf;
+		IdleAnim->GetBoneTransform(tf, boneIdx, time, true);
+		res = res * tf;
+
+		boneIdx = refSkel.GetParentIndex(boneIdx);
+	}
+	return res;
+}
+```
