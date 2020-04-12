@@ -7,13 +7,29 @@ categories:
 ### Example
 
 ```c++
-#include <iostream>
-using namespace std;
+// MIT License (c) 2019 BYU PCCL see LICENSE file
 
-int main()
+#pragma once
+
+#include "GameFramework/Pawn.h"
+#include "Components/SkeletalMeshComponent.h"
+#include "Android.generated.h"
+
+UCLASS()
+class HOLODECK_API AAndroid : public ACharacter
 {
-return 0;
-}
+	GENERATED_BODY()
+
+public:
+	/**
+	* Default Constructor
+	*/
+	AAndroid();
+
+	UPROPERTY(BlueprintReadWrite, Category = AndroidMesh)
+		USkeletalMeshComponent* SkeletalMesh;
+
+};
 ```
 
 ### Left Align
