@@ -103,9 +103,9 @@ struct FPhysicsPoseData : public FTableRowBase
 
 #### csv example
 ```
-Name,		x,		y,		z,		quatX,		quatY,		quatZ,		quatW
-a,		1,		-1, 		0.5, 		0,		-1,		-1.2, 		2.2
-b,		2,		-3,		1.5,		0,		-1,		-1.6,		3.2
+Name,	x,	y,	z,	quatX,	quatY,	quatZ,	quatW
+a,	1,	-1, 	0.5, 	0,	-1,	-1.2, 	2.2
+b,	2,	-3,	1.5,	0,	-1,	-1.6,	3.2
 ```
 
 #### c++ code에서 data table 사용하기
@@ -116,7 +116,8 @@ b,		2,		-3,		1.5,		0,		-1,		-1.6,		3.2
 #include "UObject/ConstructorHelpers.h"
 
 // load data table
-static ConstructorHelpers::FObjectFinder<UDataTable> DataTable(TEXT("/Game/Data/PhysicsPoseDataTable.PhysicsPoseDataTable"));
+static ConstructorHelpers::FObjectFinder<UDataTable> DataTable(
+TEXT("/Game/Data/PhysicsPoseDataTable.PhysicsPoseDataTable"));
 if (DataTable.Succeeded())
 {
 	UDataTable* dataTable = DataTable.Object;
@@ -129,7 +130,10 @@ if (DataTable.Succeeded())
 	{
 		UE_LOG(LogTemp, Warning, TEXT("row loc : %f %f %f  quat : %f %f %f %f"), 
 			arr[i]->x, arr[i]->y, arr[i]->z,
-			arr[i]->quatX, arr[i]->quatY, arr[i]->quatZ, arr[i]->quatW);
+			arr[i]->quatX, 
+			arr[i]->quatY, 
+			arr[i]->quatZ, 
+			arr[i]->quatW);
 	}
 
 	// write data
@@ -141,7 +145,10 @@ if (DataTable.Succeeded())
 
 		UE_LOG(LogTemp, Warning, TEXT("row loc : %f %f %f  quat : %f %f %f %f"),
 			arr[i]->x, arr[i]->y, arr[i]->z,
-			arr[i]->quatX, arr[i]->quatY, arr[i]->quatZ, arr[i]->quatW);
+			arr[i]->quatX,
+			arr[i]->quatY,
+			arr[i]->quatZ,
+			arr[i]->quatW);
 	}
 }
 ```
