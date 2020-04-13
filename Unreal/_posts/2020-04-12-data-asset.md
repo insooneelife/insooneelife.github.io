@@ -45,6 +45,7 @@ public:
 ##c++ code에서 data asset 사용하기
 ```c++
 #include "Public/CustomDataAsset.h"
+#include "UObject/ConstructorHelpers.h"
 
 static ConstructorHelpers::FObjectFinder<UDataAsset> DataAsset(TEXT("/Game/Data/CustomDataAsset.CustomDataAsset"));
 if (DataAsset.Succeeded())
@@ -109,24 +110,19 @@ b,		2,		-3,		1.5,		0,		-1,		-1.6,		3.2
 
 ##c++ code에서 data table 사용하기
 
+
 ```c++
 #include "Public/CustomDataAsset.h"
 #include "UObject/ConstructorHelpers.h"
-...
-	UDataTable* _dataTable;
-...
-```
 
-
-```c++
 // load data table
 static ConstructorHelpers::FObjectFinder<UDataTable> DataTable(TEXT("/Game/Data/PhysicsPoseDataTable.PhysicsPoseDataTable"));
 if (DataTable.Succeeded())
 {
-	_dataTable = DataTable.Object;
+	UDataTable* dataTable = DataTable.Object;
 
 	TArray<FPhysicsPoseData*> arr;
-	_dataTable->GetAllRows<FPhysicsPoseData>(TEXT("GetAllRows"), arr);
+	dataTable->GetAllRows<FPhysicsPoseData>(TEXT("GetAllRows"), arr);
 
 	// read data
 	for (int i = 0; i < arr.Num(); ++i)
