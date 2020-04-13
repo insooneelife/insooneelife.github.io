@@ -89,3 +89,11 @@ struct FPhysicsPoseData : public FTableRowBase
 콘텐츠 브로우저 -> 신규추가 -> 기타 -> 데이터 테이블
 구조체 선택 창이 뜨면 이전에 제작한 class를 선택한다.
 
+생성된 table에 .csv파일을 로드한다.
+
+##csv example
+```
+Name,		x,		y,		z,		quatX,		quatY,		quatZ,		quatW
+a,		1,		-1, 		0.5, 		0,		-1,		-1.2, 		2.2
+b,		2,		-3,		1.5,		0,		-1,		-1.6,		3.2
+```
