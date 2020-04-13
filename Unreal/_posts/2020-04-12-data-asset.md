@@ -9,6 +9,7 @@ categories:
 
 #### data asset
 Unreal engine에서 커스텀 데이터를 이용하고 싶은 경우 data asset을 이용하면 효과적이다.
+
 Data asset을 이용하기 위해서 먼저 사용하고자 하는 data 형태를 c++로 작성한다. 
 
 ```c++
@@ -84,3 +85,7 @@ struct FPhysicsPoseData : public FTableRowBase
 
 };
 ```
+이제 editor에서 실제 데이터 테이블 에셋 파일을 생성한다.
+콘텐츠 브로우저 -> 신규추가 -> 기타 -> 데이터 테이블
+구조체 선택 창이 뜨면 이전에 제작한 class를 선택한다.
+
