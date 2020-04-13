@@ -42,7 +42,7 @@ public:
 만들어진 data asset에 원하는 데이터를 채운다.
 
 
-## c++ code에서 data asset 사용하기
+#### c++ code에서 data asset 사용하기
 ```c++
 #include "Public/CustomDataAsset.h"
 #include "UObject/ConstructorHelpers.h"
@@ -101,14 +101,14 @@ struct FPhysicsPoseData : public FTableRowBase
 
 생성된 table에 .csv파일을 로드한다.
 
-## csv example
+#### csv example
 ```
 Name,		x,		y,		z,		quatX,		quatY,		quatZ,		quatW
 a,		1,		-1, 		0.5, 		0,		-1,		-1.2, 		2.2
 b,		2,		-3,		1.5,		0,		-1,		-1.6,		3.2
 ```
 
-## c++ code에서 data table 사용하기
+#### c++ code에서 data table 사용하기
 
 
 ```c++
@@ -144,6 +144,61 @@ if (DataTable.Succeeded())
 			arr[i]->quatX, arr[i]->quatY, arr[i]->quatZ, arr[i]->quatW);
 	}
 }
+```
+
+#### add item to table
+
+```c++
+void UtilsData::WritePoseDataTable()
+{
+	static ConstructorHelpers::FObjectFinder<UDataTable> DataTable(
+		TEXT("/Game/Data/PhysicsPoseDataTable.PhysicsPoseDataTable"));
+	if (DataTable.Succeeded())
+	{
+		UDataTable* dataTable = DataTable.Object;
+
+		int idx = 0;
+		for (int i = 0; i < AndroidAnimPhysicsData.Num(); ++i)
+		{
+			const PhysicsPoseData& poseData = AndroidAnimPhysicsData[i];
+			float time = poseData.seqTime;
+
+			for (int j = 0; j < poseData.data.Num(); ++j)
+			{
+				const PhysicsData& data = poseData.data[j];
+				FName name(*FString::FromInt(idx));
+				FPhysicsPoseDataTableRow row;
+
+				row.time = time;
+				row.bname = data.bname;
+				row.boneIdx = data.boneIdx;
+				row.parentBoneIdx = data.parentBoneIdx;
+				row.x = data.loc.X;
+				row.y = data.loc.Y;
+				row.z = data.loc.Z;
+				row.quatX = data.rot.X;
+				row.quatY = data.rot.Y;
+				row.quatZ = data.rot.Z;
+				row.quatW = data.rot.W;
+				row.jointAngX = data.jointAng.X;
+				row.jointAngY = data.jointAng.Y;
+				row.jointAngZ = data.jointAng.Z;
+				row.velX = data.vel.X;
+				row.velY = data.vel.Y;
+				row.velZ = data.vel.Z;
+				row.jointAngVelX = data.angVel.X;
+				row.jointAngVelY = data.angVel.Y;
+				row.jointAngVelZ = data.angVel.Z;
+				row.physicsParentName = data.physicsParentName;
+				row.physicsParentIdx = data.physicsParentIdx;
+
+				dataTable->AddRow(name, row);
+				idx++;
+			}
+		}
+	}
+}
+
 ```
 
 
