@@ -13,11 +13,13 @@ Unreal engine에서 커스텀 데이터를 이용하고 싶은 경우 data asset
 Data asset을 이용하기 위해서 먼저 사용하고자 하는 data 형태를 c++로 작성한다. 
 
 ```c++
-USTRUCT()
-struct FItemInfo {
+#include "Engine/DataAsset.h"
 
-	GENERATED_USTRUCT_BODY()
-
+UCLASS()
+class TESTWORLD_API UCustomDataAsset : public UPrimaryDataAsset
+{
+	GENERATED_BODY()
+public:	
 	UPROPERTY(EditAnywhere)
 	FString itemName;
 
@@ -33,29 +35,36 @@ struct FItemInfo {
 	UPROPERTY(EditAnywhere)
 	FQuat rot;
 };
-
-/**
- * 
- */
-UCLASS()
-class TESTPHYSICS_API UMyPrimaryDataAsset : public UPrimaryDataAsset
-{
-	GENERATED_BODY()
-
-	UPROPERTY(EditAnywhere)
-	FItemInfo data;
-};
 ```
+이제 editor에서 실제 데이터 테이블 에셋 파일을 생성한다.
+콘텐츠 브로우저 -> 신규추가 -> 기타 -> 데이터 에셋
+클래스 선택 창이 뜨면 CustomDataAsset를 선택한다.
+만들어진 data asset에 원하는 데이터를 채운다.
+
+
+##c++ code에서 data asset 사용하기
+```c++
+#include "Public/CustomDataAsset.h"
+
+static ConstructorHelpers::FObjectFinder<UDataAsset> DataAsset(TEXT("/Game/Data/CustomDataAsset.CustomDataAsset"));
+if (DataAsset.Succeeded())
+{
+	UDataAsset* dataAsset = DataAsset.Object;
+	UCustomDataAsset* data = Cast<UCustomDataAsset>(dataAsset);
+
+	UE_LOG(LogTemp, Warning, TEXT(" Data asset loc : %f %f %f"), 
+		data->loc.X, data->loc.Y, data->loc.Z);
+}
+```
+
+
 
 #### data table
 대량의 데이터를 table 형태로 관리해야하는 상황도 생길 수 있다.
 이런 경우 unreal engine의 data table을 사용하면 유용하다.
 
 ```c++
-#include "CoreMinimal.h"
-#include "Engine/DataAsset.h"
 #include "Engine/DataTable.h"
-#include "MyPrimaryDataAsset.generated.h"
 
 USTRUCT()
 struct FPhysicsPoseData : public FTableRowBase
@@ -98,7 +107,7 @@ a,		1,		-1, 		0.5, 		0,		-1,		-1.2, 		2.2
 b,		2,		-3,		1.5,		0,		-1,		-1.6,		3.2
 ```
 
-##c++ code에서 data asset 사용하기
+##c++ code에서 data table 사용하기
 
 ```c++
 #include "Public/CustomDataAsset.h"
