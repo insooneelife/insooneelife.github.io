@@ -42,7 +42,7 @@ public:
 만들어진 data asset에 원하는 데이터를 채운다.
 
 
-##c++ code에서 data asset 사용하기
+## c++ code에서 data asset 사용하기
 ```c++
 #include "Public/CustomDataAsset.h"
 #include "UObject/ConstructorHelpers.h"
@@ -101,14 +101,14 @@ struct FPhysicsPoseData : public FTableRowBase
 
 생성된 table에 .csv파일을 로드한다.
 
-##csv example
+## csv example
 ```
 Name,		x,		y,		z,		quatX,		quatY,		quatZ,		quatW
 a,		1,		-1, 		0.5, 		0,		-1,		-1.2, 		2.2
 b,		2,		-3,		1.5,		0,		-1,		-1.6,		3.2
 ```
 
-##c++ code에서 data table 사용하기
+## c++ code에서 data table 사용하기
 
 
 ```c++
