@@ -106,12 +106,11 @@ b,		2,		-3,		1.5,		0,		-1,		-1.6,		3.2
 ...
 	UDataTable* _dataTable;
 ...
-
-
 ```
 
 
 ```c++
+// load data table
 static ConstructorHelpers::FObjectFinder<UDataTable> DataTable(TEXT("/Game/Data/PhysicsPoseDataTable.PhysicsPoseDataTable"));
 if (DataTable.Succeeded())
 {
@@ -120,11 +119,24 @@ if (DataTable.Succeeded())
 	TArray<FPhysicsPoseData*> arr;
 	_dataTable->GetAllRows<FPhysicsPoseData>(TEXT("GetAllRows"), arr);
 
+	// read data
 	for (int i = 0; i < arr.Num(); ++i)
 	{
-	UE_LOG(LogTemp, Warning, TEXT("row loc : %f %f %f  quat : %f %f %f %f"), 
-		arr[i]->x, arr[i]->y, arr[i]->z,
-		arr[i]->quatX, arr[i]->quatY, arr[i]->quatZ, arr[i]->quatW);
+		UE_LOG(LogTemp, Warning, TEXT("row loc : %f %f %f  quat : %f %f %f %f"), 
+			arr[i]->x, arr[i]->y, arr[i]->z,
+			arr[i]->quatX, arr[i]->quatY, arr[i]->quatZ, arr[i]->quatW);
+	}
+
+	// write data
+	for (int i = 0; i < arr.Num(); ++i)
+	{
+		arr[i]->x = 1;
+		arr[i]->y = 0;
+		arr[i]->z = 3;
+
+		UE_LOG(LogTemp, Warning, TEXT("row loc : %f %f %f  quat : %f %f %f %f"),
+			arr[i]->x, arr[i]->y, arr[i]->z,
+			arr[i]->quatX, arr[i]->quatY, arr[i]->quatZ, arr[i]->quatW);
 	}
 }
 ```
