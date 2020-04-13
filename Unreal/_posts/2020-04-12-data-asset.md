@@ -97,3 +97,36 @@ Name,		x,		y,		z,		quatX,		quatY,		quatZ,		quatW
 a,		1,		-1, 		0.5, 		0,		-1,		-1.2, 		2.2
 b,		2,		-3,		1.5,		0,		-1,		-1.6,		3.2
 ```
+
+##c++ code에서 data asset 사용하기
+
+```c++
+#include "Public/CustomDataAsset.h"
+#include "UObject/ConstructorHelpers.h"
+...
+	UDataTable* _dataTable;
+...
+
+
+```
+
+
+```c++
+static ConstructorHelpers::FObjectFinder<UDataTable> DataTable(TEXT("/Game/Data/PhysicsPoseDataTable.PhysicsPoseDataTable"));
+if (DataTable.Succeeded())
+{
+	_dataTable = DataTable.Object;
+
+	TArray<FPhysicsPoseData*> arr;
+	_dataTable->GetAllRows<FPhysicsPoseData>(TEXT("GetAllRows"), arr);
+
+	for (int i = 0; i < arr.Num(); ++i)
+	{
+	UE_LOG(LogTemp, Warning, TEXT("row loc : %f %f %f  quat : %f %f %f %f"), 
+		arr[i]->x, arr[i]->y, arr[i]->z,
+		arr[i]->quatX, arr[i]->quatY, arr[i]->quatZ, arr[i]->quatW);
+	}
+}
+```
+
+
