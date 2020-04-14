@@ -1,7 +1,6 @@
 ---
 title: "[Unreal] Parallel"
 categories:
-  - Markup
   - Data
 ---
 
