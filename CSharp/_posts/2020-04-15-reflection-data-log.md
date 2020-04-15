@@ -201,3 +201,25 @@ public class CharacterLoadData
   ...
 }
 ```
+
+```c#
+public static string LogReflection(object data)
+{
+  Type type = data.GetType();
+  PropertyInfo[] properties = type.GetProperties();
+  string logText = "";
+
+  foreach (var p in properties)
+  {
+    if (Attribute.IsDefined(p, typeof(LogDataAttribute)))
+    {
+      LogDataAttribute logAtt = 
+        (LogDataAttribute)p.GetCustomAttribute(typeof(LogDataAttribute), false);
+
+      object val = p.GetValue(data);
+      logText += $"{String.Format(logAtt.Format, val.ToString())} ";
+    }
+  }
+  return logText;
+}
+```
