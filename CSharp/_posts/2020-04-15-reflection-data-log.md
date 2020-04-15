@@ -7,6 +7,7 @@ categories:
 Reflection의 대한 얘기를 하기 전에 왜 reflection이 필요하게 되었는지에 대해 이해할 필요가 있다.
 
 다음과 같은 상황을 생각해보자.
+파일로부터 data를 읽어서 CharacterLoadData라는 클래스의 인스턴스를 생성하는 코드를 작성하려 한다.
 
 ```c++
 public class CharacterLoadData
@@ -29,6 +30,29 @@ public class CharacterLoadData
       _items = items;
     }
 
+    // for create instance from data
+    public static CharacterLoadData Create(string[] result)
+    {
+      string name = result[0];
+      int x = Int32.Parse(result[1]);
+      int y = Int32.Parse(result[2]);
+
+      string item1 = result[3];
+      string item2 = result[4];
+      string item3 = result[5];
+
+      CharacterLoadData data = new CharacterLoadData(name, x, y, new List<string>() { item1, item2, item3 });
+      return data;
+    }
+}
+```
+
+다음과 같이 작성할 수 있다.
+하지만 개발을 하다 보니 이 로딩과정에서 데이터가 정확하게 들어갔는지 확인하고 싶어졌다.
+그래서 create 함수에 다음과 같은 로깅 코드를 추가한다.
+
+```c++
+// for create instance from data
     public static CharacterLoadData Create(string[] result)
     {
       string name = result[0];
@@ -53,5 +77,4 @@ public class CharacterLoadData
 
       return data;
     }
-}
 ```
