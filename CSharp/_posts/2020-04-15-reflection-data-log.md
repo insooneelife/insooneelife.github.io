@@ -79,9 +79,10 @@ public class CharacterLoadData
     }
     
 ```
+
+데이터도 예쁘게 출력되었다.
+```c++
 [CharacterLoadData] insooneelife     50       100      Gun          Sword        Spear       
 [CharacterLoadData] enemy1           -50      0        Spear        Spear        Spear       
-[CharacterLoadData] enemy2           0        -50      Sword        Sword        Sword     
-```c++
-
+[CharacterLoadData] enemy2           0        -50      Sword        Sword        Sword 
 ```
