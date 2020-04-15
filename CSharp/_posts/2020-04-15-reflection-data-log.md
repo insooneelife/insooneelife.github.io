@@ -176,8 +176,7 @@ public class LogDataAttribute : System.Attribute
   public string Format { get { return _format; } }
   public LogDataAttribute(int paddingStart = 0, int paddingEnd = -20)
   {
-    // jekyll에서 컴파일이 안됨..
-    //_format = $"{{{paddingStart}, {paddingEnd}}}";
+    // jekyll에서 컴파일이 안돼서 어쩔수없이 조금 비효율적인 코드를 작성함
     _format ="{" + $"{paddingStart}, {paddingEnd}" + "}";
   }
 }
@@ -377,7 +376,6 @@ public class LogDataAttribute : System.Attribute
   // order에 넣어주도록 하는 이미 정의되어있는 Attribute이다.
   public LogDataAttribute(int paddingStart = 0, int paddingEnd = -20, [CallerLineNumber]int order = 0)
   {
-    //_format = $"{{{paddingStart}, {paddingEnd}}}";
     _format ="{" + $"{paddingStart}, {paddingEnd}" + "}";
     _order = order;
   }
