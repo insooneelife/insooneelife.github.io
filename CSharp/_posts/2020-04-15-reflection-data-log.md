@@ -151,3 +151,47 @@ Logger.Log($"[CharacterLoadData] {Utils.LogReflection(c)}");
 1. 모든 프로퍼티를 참조하기 때문에, 원하지 않는 프로퍼티라도 로깅의 대상이 될 수 있다.
 2. 출력 string의 format이 "{0, -13}"으로 고정되어있다.
 3. Collection에 대한 처리가 수행되지 않았다.
+
+세 가지 문제를 해결하기 위해 다음 것들이 필요하다.
+1. 로깅 대상이 될 프로퍼티를 특정할 수 있어야 한다.
+2. 로깅 대상이 될 프로퍼티에는 Format에 대한 추가 정보가 있어야 한다.
+3. 로깅 대상이 컬렉션인 경우 로깅 방법을 바꿔야 한다.
+
+로깅 대상이 될 프로퍼티에 특별한 추가 정보를 주기 위해서,
+c#에는 Attribute라는 녀석을 사용한다.
+
+```c#
+public class LogDataAttribute : System.Attribute
+{
+  private string _format;
+  public string Format { get { return _format; } }
+  public LogDataAttribute(int paddingStart = 0, int paddingEnd = -20)
+  {
+    _format = $"{{{paddingStart}, {paddingEnd}}}";
+  }
+}
+```
+
+```c#
+public class CharacterLoadData
+{
+  private string _name;
+  private int _x;
+  private int _y;
+  private List<string> _items;
+
+  // Logging의 padding을 위한 meta data를 Attribute를 통해 추가 
+  [LogDataAttribute(0, -16)]
+  public string Name { get { return _name; } }
+
+  [LogDataAttribute(0, -8)]
+  public int X { get { return _x; } }
+
+  [LogDataAttribute(0, -8)]
+  public int Y { get { return _y; } }
+
+  [LogDataAttribute(0, -12)]
+  public List<string> Items { get { return _items; } }
+  ...
+}
+```
