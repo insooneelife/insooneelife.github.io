@@ -217,9 +217,17 @@ public static string LogReflection(object data)
         (LogDataAttribute)p.GetCustomAttribute(typeof(LogDataAttribute), false);
 
       object val = p.GetValue(data);
+      // LogDataAttribute를 통해 format의 padding의 대한 데이터를 가져온다.
       logText += $"{String.Format(logAtt.Format, val.ToString())} ";
     }
   }
   return logText;
 }
+```
+
+다시 예쁘게 출력되었다.
+```
+[CharacterLoadData] insooneelife     50       0        System.Collections.Generic.List`1[System.String] 
+[CharacterLoadData] enemy1           -50      0        System.Collections.Generic.List`1[System.String] 
+[CharacterLoadData] enemy2           0        0        System.Collections.Generic.List`1[System.String] 
 ```
