@@ -114,6 +114,7 @@ using System.Reflection;
 ```c#
 public static string LogReflection(object data)
 {
+  // reflection을 이용하여 data의 타입으로부터 어떤 프로퍼티들을 갖고있는지 가져올 수 있다.
   Type type = data.GetType();
   PropertyInfo[] properties = type.GetProperties();
   string logText = "";
@@ -147,3 +148,8 @@ Logger.Log($"[CharacterLoadData] {Utils.LogReflection(c)}");
 [CharacterLoadData] enemy1 -50 0 System.Collections.Generic.List`1[System.String] 
 [CharacterLoadData] enemy2 0 0 System.Collections.Generic.List`1[System.String] 
 ```
+
+하지만 여전히 문제는 남아있다.
+1. 데이터가 예쁘게 출력되지 않았다.
+2. Collection에 대한 처리가 수행되지 않았다.
+3. 모든 프로퍼티를 참조하기 때문에, 원하지 않는 프로퍼티라도 로깅의 대상이 될 수 있다.
