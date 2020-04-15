@@ -53,30 +53,30 @@ public class CharacterLoadData
 
 ```c++
 // for create instance from data
-    public static CharacterLoadData Create(string[] result)
-    {
-      string name = result[0];
-      int x = Int32.Parse(result[1]);
-      int y = Int32.Parse(result[2]);
+public static CharacterLoadData Create(string[] result)
+{
+  string name = result[0];
+  int x = Int32.Parse(result[1]);
+  int y = Int32.Parse(result[2]);
 
-      string item1 = result[3];
-      string item2 = result[4];
-      string item3 = result[5];
+  string item1 = result[3];
+  string item2 = result[4];
+  string item3 = result[5];
 
-      CharacterLoadData data = new CharacterLoadData(name, x, y, new List<string>() { item1, item2, item3 });
+  CharacterLoadData data = new CharacterLoadData(name, x, y, new List<string>() { item1, item2, item3 });
 
-      // for logging
-      string logName = String.Format("{0, -16}", name);
-      string logX = String.Format("{0, -8}", x);
-      string logY = String.Format("{0, -8}", y);
-      string logItem1 = String.Format("{0, -12}", item1);
-      string logItem2 = String.Format("{0, -12}", item2);
-      string logItem3 = String.Format("{0, -12}", item3);
+  // for logging
+  string logName = String.Format("{0, -16}", name);
+  string logX = String.Format("{0, -8}", x);
+  string logY = String.Format("{0, -8}", y);
+  string logItem1 = String.Format("{0, -12}", item1);
+  string logItem2 = String.Format("{0, -12}", item2);
+  string logItem3 = String.Format("{0, -12}", item3);
 
-      Logger.Log($"[CharacterLoadData] {logName} {logX} {logY} {logItem1} {logItem2} {logItem3}");
+  Logger.Log($"[CharacterLoadData] {logName} {logX} {logY} {logItem1} {logItem2} {logItem3}");
 
-      return data;
-    }
+  return data;
+}
     
 ```
 
@@ -100,3 +100,6 @@ public class MapLoadData
 
 ```
 새로운 클래스가 추가될 때마다 로깅을 위한 로직보다도 많은 양의 코드를 반복적으로 작성해야한다.
+
+그냥 정의만 하면 "알아서" 로깅을 할수는 없는것인가??
+여기서부터 reflection이 필요하다.
