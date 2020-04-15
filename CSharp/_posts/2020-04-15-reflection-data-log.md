@@ -77,4 +77,11 @@ public class CharacterLoadData
 
       return data;
     }
+    
+```
+[CharacterLoadData] insooneelife     50       100      Gun          Sword        Spear       
+[CharacterLoadData] enemy1           -50      0        Spear        Spear        Spear       
+[CharacterLoadData] enemy2           0        -50      Sword        Sword        Sword     
+```c++
+
 ```
