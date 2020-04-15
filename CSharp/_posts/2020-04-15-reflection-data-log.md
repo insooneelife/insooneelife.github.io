@@ -26,7 +26,7 @@ public class CharacterLoadData
     {
       _name = name;
       _x = x;
-      _y = Y;
+      _y = y;
       _items = items;
     }
 
@@ -148,9 +148,9 @@ public static CharacterLoadData Create(string[] result)
 ```
 
 ```
-[CharacterLoadData] insooneelife  50            0             System.Collections.Generic.List`1[System.String] 
+[CharacterLoadData] insooneelife  50            100             System.Collections.Generic.List`1[System.String] 
 [CharacterLoadData] enemy1        -50           0             System.Collections.Generic.List`1[System.String] 
-[CharacterLoadData] enemy2        0             0             System.Collections.Generic.List`1[System.String]  
+[CharacterLoadData] enemy2        0             -50             System.Collections.Generic.List`1[System.String]  
 ```
 
 하지만 여전히 문제는 남아있다.
@@ -227,7 +227,9 @@ public static string LogReflection(object data)
 
 다시 예쁘게 출력되었다.
 ```
-[CharacterLoadData] insooneelife     50       0        System.Collections.Generic.List`1[System.String] 
+[CharacterLoadData] insooneelife     50       100        System.Collections.Generic.List`1[System.String] 
 [CharacterLoadData] enemy1           -50      0        System.Collections.Generic.List`1[System.String] 
-[CharacterLoadData] enemy2           0        0        System.Collections.Generic.List`1[System.String] 
+[CharacterLoadData] enemy2           0        -50        System.Collections.Generic.List`1[System.String] 
 ```
+
+이제 컬렉션을 처리해보자.
