@@ -9,7 +9,7 @@ Reflection의 대한 얘기를 하기 전에 왜 reflection이 필요하게 되�
 다음과 같은 상황을 생각해보자.
 파일로부터 data를 읽어서 CharacterLoadData라는 클래스의 인스턴스를 생성하는 코드를 작성하려 한다.
 
-```c++
+```c#
 public class CharacterLoadData
 {
     private string _name;
@@ -51,7 +51,7 @@ public class CharacterLoadData
 하지만 개발을 하다 보니 이 로딩과정에서 데이터가 정확하게 들어갔는지 확인하고 싶어졌다.
 그래서 create 함수에 다음과 같은 로깅 코드를 추가한다.
 
-```c++
+```c#
 // for create instance from data
 public static CharacterLoadData Create(string[] result)
 {
@@ -81,7 +81,7 @@ public static CharacterLoadData Create(string[] result)
 ```
 
 데이터도 예쁘게 출력되었다.
-```c++
+```c#
 [CharacterLoadData] insooneelife     50       100      Gun          Sword        Spear       
 [CharacterLoadData] enemy1           -50      0        Spear        Spear        Spear       
 [CharacterLoadData] enemy2           0        -50      Sword        Sword        Sword 
@@ -90,7 +90,7 @@ public static CharacterLoadData Create(string[] result)
 여기까지만 보면 딱히 문제가 없는 것 같다.
 하지만 저런 형태의 data class 종류가 많아지게 된다면 어떻게 될까??
 
-```c++
+```c#
 public class ImageLoadData
 ...
 public class ItemLoadData
@@ -102,4 +102,11 @@ public class MapLoadData
 새로운 클래스가 추가될 때마다 로깅을 위한 로직보다도 많은 양의 코드를 반복적으로 작성해야한다.
 
 그냥 정의만 하면 "알아서" 로깅을 할수는 없는것인가??
-여기서부터 reflection이 필요하다.
+여기서부터 reflection의 영역이다.
+
+이 작업을 하려면 먼저 클래스에서 어떤 멤버변수나 프로퍼티 등을 가지고 있는지 알아야 한다.
+즉 현재까지 우리가 type이라고 이해하고 있던 class라는 녀석을 표현하는 meta data에 접근할 수 있어야 한다.
+
+
+```c#
+```
