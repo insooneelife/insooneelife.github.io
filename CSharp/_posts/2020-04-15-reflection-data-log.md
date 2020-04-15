@@ -141,9 +141,9 @@ Logger.Log($"[CharacterLoadData] {Utils.LogReflection(b)}");
 Logger.Log($"[CharacterLoadData] {Utils.LogReflection(c)}");
 ...
 ```
+
+```c#
 [CharacterLoadData] insooneelife 50 0 System.Collections.Generic.List`1[System.String] 
 [CharacterLoadData] enemy1 -50 0 System.Collections.Generic.List`1[System.String] 
 [CharacterLoadData] enemy2 0 0 System.Collections.Generic.List`1[System.String] 
-```c#
-
 ```
