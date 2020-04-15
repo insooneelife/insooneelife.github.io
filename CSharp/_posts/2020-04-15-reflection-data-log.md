@@ -108,6 +108,10 @@ public class MapLoadData
 즉 현재까지 우리가 type으로만 사용하던 class를 표현하는 meta data에 접근할 수 있어야 한다.
 
 ```c#
+using System.Reflection;
+```
+
+```c#
 public static string LogReflection(object data)
 {
   Type type = data.GetType();
@@ -125,7 +129,6 @@ public static string LogReflection(object data)
 ```
 
 ```c#
-using System.Reflection;
 var a = Utils.CharacterLoadData.Create(
   new string[] { "insooneelife", "50", "100", "Gun", "Sword", "Spear" });
 var b = Utils.CharacterLoadData.Create(
@@ -137,5 +140,10 @@ Logger.Log($"[CharacterLoadData] {Utils.LogReflection(a)}");
 Logger.Log($"[CharacterLoadData] {Utils.LogReflection(b)}");
 Logger.Log($"[CharacterLoadData] {Utils.LogReflection(c)}");
 ...
+```
+[CharacterLoadData] insooneelife 50 0 System.Collections.Generic.List`1[System.String] 
+[CharacterLoadData] enemy1 -50 0 System.Collections.Generic.List`1[System.String] 
+[CharacterLoadData] enemy2 0 0 System.Collections.Generic.List`1[System.String] 
+```c#
 
 ```
