@@ -81,7 +81,7 @@ public static CharacterLoadData Create(string[] result)
 ```
 
 데이터도 예쁘게 출력되었다.
-```c#
+```
 [CharacterLoadData] insooneelife     50       100      Gun          Sword        Spear       
 [CharacterLoadData] enemy1           -50      0        Spear        Spear        Spear       
 [CharacterLoadData] enemy2           0        -50      Sword        Sword        Sword 
@@ -142,7 +142,7 @@ Logger.Log($"[CharacterLoadData] {Utils.LogReflection(c)}");
 ...
 ```
 
-```c#
+```
 [CharacterLoadData] insooneelife 50 0 System.Collections.Generic.List`1[System.String] 
 [CharacterLoadData] enemy1 -50 0 System.Collections.Generic.List`1[System.String] 
 [CharacterLoadData] enemy2 0 0 System.Collections.Generic.List`1[System.String] 
