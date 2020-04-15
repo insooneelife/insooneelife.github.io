@@ -283,14 +283,14 @@ public static string LogReflection(object data)
 List인 경우 예외적으로 로깅하도록 하였다.
 Dictionary인 경우는 비슷한 방법으로 따로 처리해야 할 것이다.
 
-## 평가
+#### 평가
 Reflection을 활용하면 위와 같은 생각지도 못한 부분들조차 자동화시킬 수 있다.
 실제로 Create함수의 파일로부터 데이터를 읽어오는 부분도 비슷한 방법으로 일반화시킬 수 있고,
 또한 테스팅, 전처리, 코드를 통한 코드 생성까지도 가능하다.
 엄청난 개념이기 때문에 알아두면 두고두고 유용하게 사용될 것이다.
 
 
-## 심화된 문제상황
+#### 심화된 문제상황
 모든 문제가 해결된 것 같지만 아직 문제가 더 남아있다.
 위와 같은 여러 종류의 LoadData들의 공통적으로 사용되는 부분을 재사용 하기 위해, 
 LoadData라는 base class를 만들어 상속받도록 하는 경우를 생각해보자.
@@ -303,7 +303,9 @@ public class LoadData
   public string Name { get { return _name; } }
   public LoadData(string name) { _name = name; }
 }
+```
 
+```c#
 public class CharacterLoadData : LoadData
 {
   private int _x;
@@ -354,3 +356,81 @@ public class CharacterLoadData : LoadData
 ```
 
 이 경우 Name이 뒤에 출력되게 된다.
+이를 해결하기 위해 Attribute에 line 단위 ordering기능을 추가해보자.
+
+```c#
+using System.Runtime.CompilerServices;
+```
+
+```c#
+public class LogDataAttribute : System.Attribute
+{
+  private string _format;
+  private readonly int _order;
+  public string Format { get { return _format; } }
+  public int Order { get { return _order; } }
+
+  // CallerLineNumber는 Attribute가 선언된 코드라인값을 가져와,
+  // order에 넣어주도록 하는 이미 정의되어있는 Attribute이다.
+  public LogDataAttribute(int paddingStart = 0, int paddingEnd = -20, [CallerLineNumber]int order = 0)
+  {
+    _format = $"{{{paddingStart}, {paddingEnd}}}";
+    _order = order;
+  }
+}
+```
+
+
+```c#
+public static string LogReflection(object data)
+{
+  Type type = data.GetType();
+  PropertyInfo[] properties = type.GetProperties();
+  string logText = "";
+
+  // ordering
+  List<PropertyInfo> orderedProps = new List<PropertyInfo>();
+  foreach (var p in properties)
+  {
+    if (Attribute.IsDefined(p, typeof(LogDataAttribute)))
+    {
+      orderedProps.Add(p);
+    }
+  }
+  // Order값을 이용한 정렬
+  orderedProps.Sort((x, y) => {
+    var xAtt = (LogDataAttribute)x.GetCustomAttribute(typeof(LogDataAttribute), false);
+    var yAtt = (LogDataAttribute)y.GetCustomAttribute(typeof(LogDataAttribute), false);
+
+    return xAtt.Order.CompareTo(yAtt.Order);
+  });
+
+  foreach (var p in orderedProps)
+  {
+    var logAtt = (LogDataAttribute)p.GetCustomAttribute(typeof(LogDataAttribute), false);
+    bool isList = typeof(System.Collections.IList).IsAssignableFrom(p.PropertyType);
+
+    if (isList)
+    {
+      object val = p.GetValue(data);
+      var list = val as System.Collections.IList;
+      foreach (var d in list)
+      {
+        logText += $"{String.Format(logAtt.Format, d.ToString())} ";
+      }
+    }
+    else
+    {
+      object val = p.GetValue(data);
+      logText += $"{String.Format(logAtt.Format, val.ToString())} ";
+    }
+  }
+  return logText;
+}
+```
+
+```
+[CharacterLoadData] insooneelife     50       100      Gun          Sword        Spear        
+[CharacterLoadData] enemy1           -50      0        Spear        Spear        Spear        
+[CharacterLoadData] enemy2           0        -50      Sword        Sword        Sword    
+```
