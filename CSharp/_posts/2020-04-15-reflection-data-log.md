@@ -105,8 +105,37 @@ public class MapLoadData
 여기서부터 reflection의 영역이다.
 
 이 작업을 하려면 먼저 클래스에서 어떤 멤버변수나 프로퍼티 등을 가지고 있는지 알아야 한다.
-즉 현재까지 우리가 type이라고 이해하고 있던 class라는 녀석을 표현하는 meta data에 접근할 수 있어야 한다.
-
+즉 현재까지 우리가 type으로만 사용하던 class를 표현하는 meta data에 접근할 수 있어야 한다.
 
 ```c#
+public static string LogReflection(object data)
+{
+  Type type = data.GetType();
+  PropertyInfo[] properties = type.GetProperties();
+  string logText = "";
+
+  foreach (var p in properties)
+  {
+    object val = p.GetValue(data);
+    logText += $"{val.ToString()} ";
+
+  }
+  return logText;
+}
+```
+
+```c#
+using System.Reflection;
+var a = Utils.CharacterLoadData.Create(
+  new string[] { "insooneelife", "50", "100", "Gun", "Sword", "Spear" });
+var b = Utils.CharacterLoadData.Create(
+  new string[] { "enemy1", "-50", "0", "Spear", "Spear", "Spear" });
+var c = Utils.CharacterLoadData.Create(
+  new string[] { "enemy2", "0", "-50", "Sword", "Sword", "Sword" });
+
+Logger.Log($"[CharacterLoadData] {Utils.LogReflection(a)}");
+Logger.Log($"[CharacterLoadData] {Utils.LogReflection(b)}");
+Logger.Log($"[CharacterLoadData] {Utils.LogReflection(c)}");
+...
+
 ```
