@@ -233,3 +233,46 @@ public static string LogReflection(object data)
 ```
 
 이제 컬렉션을 처리해보자.
+```c#
+public static string LogReflection(object data)
+{
+  Type type = data.GetType();
+  PropertyInfo[] properties = type.GetProperties();
+  string logText = "";
+
+  foreach (var p in properties)
+  {
+    if (Attribute.IsDefined(p, typeof(LogDataAttribute)))
+    {
+      LogDataAttribute logAtt = 
+        (LogDataAttribute)p.GetCustomAttribute(typeof(LogDataAttribute), false);
+      // list인 경우 예외처리
+      bool isList = typeof(System.Collections.IList).IsAssignableFrom(p.PropertyType);
+
+      if (isList)
+      {
+        object val = p.GetValue(data);
+        var list = val as System.Collections.IList;
+        foreach (var d in list)
+        {
+          logText += $"{String.Format(logAtt.Format, d.ToString())} ";
+        }
+      }
+      else
+      {
+        object val = p.GetValue(data);
+        // LogDataAttribute를 통해 format의 padding의 대한 데이터를 가져온다.
+        logText += $"{String.Format(logAtt.Format, val.ToString())} ";
+      }
+
+    }
+  }
+  return logText;
+}
+```
+
+```
+[CharacterLoadData] insooneelife     50       100      Gun          Sword        Spear        
+[CharacterLoadData] enemy1           -50      0        Spear        Spear        Spear        
+[CharacterLoadData] enemy2           0        -50      Sword        Sword        Sword      
+```
