@@ -176,7 +176,9 @@ public class LogDataAttribute : System.Attribute
   public string Format { get { return _format; } }
   public LogDataAttribute(int paddingStart = 0, int paddingEnd = -20)
   {
-    _format = $"{{{paddingStart}, {paddingEnd}}}";
+    // jekyll에서 컴파일이 안됨..
+    //_format = $"{{{paddingStart}, {paddingEnd}}}";
+    _format ="{" + $"{paddingStart}, {paddingEnd}" + "}";
   }
 }
 ```
