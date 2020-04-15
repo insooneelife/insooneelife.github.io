@@ -4,8 +4,10 @@ categories:
   - Reflection
 ---
 
+## Reflection
 Reflection의 대한 얘기를 하기 전에 왜 reflection이 필요하게 되었는지에 대해 이해할 필요가 있다.
 
+#### 문제상황
 다음과 같은 상황을 생각해보자.
 파일로부터 data를 읽어서 CharacterLoadData라는 클래스의 인스턴스를 생성하는 코드를 작성하려 한다.
 
@@ -101,6 +103,7 @@ public class MapLoadData
 ```
 새로운 클래스가 추가될 때마다 로깅을 위한 로직보다도 많은 양의 코드를 반복적으로 작성해야한다.
 
+#### 해결
 그냥 정의만 하면 "알아서" 로깅을 할수는 없는것인가??
 여기서부터 reflection의 영역이다.
 
@@ -276,3 +279,78 @@ public static string LogReflection(object data)
 [CharacterLoadData] enemy1           -50      0        Spear        Spear        Spear        
 [CharacterLoadData] enemy2           0        -50      Sword        Sword        Sword      
 ```
+
+List인 경우 예외적으로 로깅하도록 하였다.
+Dictionary인 경우는 비슷한 방법으로 따로 처리해야 할 것이다.
+
+## 평가
+Reflection을 활용하면 위와 같은 생각지도 못한 부분들조차 자동화시킬 수 있다.
+실제로 Create함수의 파일로부터 데이터를 읽어오는 부분도 비슷한 방법으로 일반화시킬 수 있고,
+또한 테스팅, 전처리, 코드를 통한 코드 생성까지도 가능하다.
+엄청난 개념이기 때문에 알아두면 두고두고 유용하게 사용될 것이다.
+
+
+## 심화된 문제상황
+모든 문제가 해결된 것 같지만 아직 문제가 더 남아있다.
+위와 같은 여러 종류의 LoadData들의 공통적으로 사용되는 부분을 재사용 하기 위해, 
+LoadData라는 base class를 만들어 상속받도록 하는 경우를 생각해보자.
+
+```c#
+public class LoadData
+{
+  private string _name;
+  [LogDataAttribute(0, -16)]
+  public string Name { get { return _name; } }
+  public LoadData(string name) { _name = name; }
+}
+
+public class CharacterLoadData : LoadData
+{
+  private int _x;
+  private int _y;
+  private List<string> _items;
+
+  [LogDataAttribute(0, -8)]
+  public int X { get { return _x; } }
+
+  [LogDataAttribute(0, -8)]
+  public int Y { get { return _y; } }
+
+  [LogDataAttribute(0, -12)]
+  public List<string> Items { get { return _items; } }
+
+  public CharacterLoadData(string name, int x, int y, List<string> items)
+    :base(name)
+  {
+    _x = x;
+    _y = y;
+    _items = items;
+  }
+
+  public static CharacterLoadData Create(string[] result)
+  {
+    string name = result[0];
+    int x = Int32.Parse(result[1]);
+    int y = Int32.Parse(result[2]);
+
+    string item1 = result[3];
+    string item2 = result[4];
+    string item3 = result[5];
+
+    CharacterLoadData data = new CharacterLoadData(name, x, y, new List<string>() { item1, item2, item3 });
+
+    // for logging
+    Logger.Log($"[CharacterLoadData] {Utils.LogReflection(data)}");
+
+    return data;
+  }
+}
+```
+
+```
+[CharacterLoadData] 50       100      Gun          Sword        Spear        insooneelife     
+[CharacterLoadData] -50      0        Spear        Spear        Spear        enemy1           
+[CharacterLoadData] 0        -50      Sword        Sword        Sword        enemy2     
+```
+
+이 경우 Name이 뒤에 출력되게 된다.
