@@ -1,3 +1,10 @@
+---
+title: "[C#] Reflection Data Read"
+categories:
+  - Reflection
+---
+
+## Reflection
 
 ```c#
 
