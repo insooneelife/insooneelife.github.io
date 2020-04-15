@@ -128,17 +128,23 @@ public static string LogReflection(object data)
 ```
 
 ```c#
-var a = Utils.CharacterLoadData.Create(
-  new string[] { "insooneelife", "50", "100", "Gun", "Sword", "Spear" });
-var b = Utils.CharacterLoadData.Create(
-  new string[] { "enemy1", "-50", "0", "Spear", "Spear", "Spear" });
-var c = Utils.CharacterLoadData.Create(
-  new string[] { "enemy2", "0", "-50", "Sword", "Sword", "Sword" });
+public static CharacterLoadData Create(string[] result)
+{
+  string name = result[0];
+  int x = Int32.Parse(result[1]);
+  int y = Int32.Parse(result[2]);
 
-Logger.Log($"[CharacterLoadData] {Utils.LogReflection(a)}");
-Logger.Log($"[CharacterLoadData] {Utils.LogReflection(b)}");
-Logger.Log($"[CharacterLoadData] {Utils.LogReflection(c)}");
-...
+  string item1 = result[3];
+  string item2 = result[4];
+  string item3 = result[5];
+
+  CharacterLoadData data = new CharacterLoadData(name, x, y, new List<string>() { item1, item2, item3 });
+
+  // for logging
+  Logger.Log($"[CharacterLoadData] {Utils.LogReflection(data)}");
+
+  return data;
+}
 ```
 
 ```
