@@ -86,3 +86,17 @@ public class CharacterLoadData
 [CharacterLoadData] enemy1           -50      0        Spear        Spear        Spear       
 [CharacterLoadData] enemy2           0        -50      Sword        Sword        Sword 
 ```
+
+여기까지만 보면 딱히 문제가 없는 것 같다.
+하지만 저런 형태의 data class 종류가 많아지게 된다면 어떻게 될까??
+
+```c++
+public class ImageLoadData
+...
+public class ItemLoadData
+...
+public class MapLoadData
+...
+
+```
+새로운 클래스가 추가될 때마다 로깅을 위한 로직보다도 많은 양의 코드를 반복적으로 작성해야한다.
