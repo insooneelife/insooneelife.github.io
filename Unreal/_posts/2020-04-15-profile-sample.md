@@ -41,7 +41,7 @@ Unreal 내부에서 프로파일링 과정을 보기 위해 먼저 ` 키를 눌�
 ```
 
 다음과 같이 표시된다.
-[![foo](https://github.com/insooneelife/insooneelife.github.io/blob/master/assets/images/unreal-profile-sample1.png)](https://flic.kr/p/dNiUYB)
+![image-center](/assets/images/unreal-profile-sample1.png){: .align-center}
 
 주의할 점은 프로파일링 과정을 화면에 ui로 표시해주는 것 자체가 또 어느정도의 성능에 영향을 미치기 때문에
 ```
