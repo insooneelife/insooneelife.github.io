@@ -1,7 +1,6 @@
 ---
 title: "[Unreal] Data"
 categories:
-  - Markup
   - Data
 ---
 
@@ -207,5 +206,4 @@ void UtilsData::WritePoseDataTable()
 }
 
 ```
-
 
