@@ -6,6 +6,8 @@ categories:
 
 ### Profile
 
+[![foo](https://live.staticflickr.com/8361/8400335147_5fabaa504c_o.jpg)](https://flic.kr/p/dNiUYB)
+
 
 프로파일링을 위한 그룹 선언
 ```c++
