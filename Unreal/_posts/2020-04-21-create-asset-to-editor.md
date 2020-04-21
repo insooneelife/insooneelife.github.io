@@ -126,6 +126,8 @@ public:
 #include "AssetToolsModule.h"
 #include "UnrealEd.h"
 
+...
+
 void ATestProjectGameMode::StartPlay()
 {
 	Super::StartPlay();
@@ -139,4 +141,5 @@ void ATestProjectGameMode::StartPlay()
 }
 ```
 
+#### 실행 결과
 
