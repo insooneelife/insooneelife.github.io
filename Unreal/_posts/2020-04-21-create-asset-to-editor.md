@@ -142,4 +142,12 @@ void ATestProjectGameMode::StartPlay()
 ```
 
 #### 실행 결과
-![image-center](/assets/images/unreal-profile-sample1.png){: .align-center}
+게임을 실행시키면 GameMode에서 StartPlay를 호출하면서 에셋을 저장하는 코드를 실행할 것이다.
+![image-center](/assets/images/unreal-create-asset-to-editor-begin.png){: .align-center}
+
+그럼 다음과 같은 창이 뜰 것이다.
+저장할 위치를 선택해준다.
+![image-center](/assets/images/unreal-create-asset-to-editor-play.png){: .align-center}
+
+그럼 다음과 같이 에셋이 에디터에 저장된다.
+![image-center](/assets/images/unreal-create-asset-to-editor-result.png){: .align-center}
