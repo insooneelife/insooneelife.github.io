@@ -42,4 +42,4 @@ void Examples::DebugDrawExample(UWorld* World)
 
 #### 실행 결과
 다음과 같이 화면에 도형들이 출력된다.
-![image-center](/assets/images/unreal-create-asset-to-editor-result.png){: .align-center}
+![image-center](/assets/images/unreal-debug-draw-sample1.png){: .align-center}
