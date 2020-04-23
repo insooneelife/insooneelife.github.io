@@ -41,59 +41,6 @@ public:
 };
 ```
 
-#### asset factory
-이제 에셋을 생성시켜줄 factory class를 정의한다. 
-UFactory class를 상속받은 새 클래스를 만든다.
-
-```c++
-#include "CoreMinimal.h"
-#include "Factories/Factory.h"
-#include "MyPrimaryDataAsset.h"
-#include "MyFactory.generated.h"
-
-UCLASS()
-class TESTPROJECT_API UMyFactory : public UFactory
-{
-	GENERATED_BODY()
-public:
-	UMyFactory(const FObjectInitializer& ObjectInitializer);
-	virtual UObject* FactoryCreateNew(UClass* InClass, UObject* InParent, FName InName, EObjectFlags Flags, UObject* Context, FFeedbackContext* Warn) override;
-
-
-	// Helps us to know if we are create a new Object or just saving an existing one.
-	UMyPrimaryDataAsset* CreatedObjectAsset;
-};
-```
-
-```c++
-#include "MyFactory.h"
-#include "UnrealEd.h"
-
-UMyFactory::UMyFactory(const FObjectInitializer& ObjectInitializer) :Super(ObjectInitializer)
-{
-	bCreateNew = true;
-	bEditAfterNew = true;
-	SupportedClass = UMyPrimaryDataAsset::StaticClass();
-}
-
-UObject* UMyFactory::FactoryCreateNew(UClass* Class, UObject* InParent, FName Name, EObjectFlags Flags, UObject* Context, FFeedbackContext* Warn)
-{
-
-	if (CreatedObjectAsset != nullptr)
-	{
-		CreatedObjectAsset->SetFlags(Flags | RF_Transactional);
-		CreatedObjectAsset->Modify();
-		CreatedObjectAsset->Rename(*Name.ToString(), InParent);
-	}
-	else
-	{
-		CreatedObjectAsset = NewObject<UMyPrimaryDataAsset>(InParent, Class, Name, Flags | RF_Transactional);
-	}
-	return CreatedObjectAsset;
-}
-```
-
-
 #### gamemode에서 에셋 생성
 ```c++
 #pragma once
@@ -119,27 +66,51 @@ public:
 ```c++
 #include "TestProjectGameMode.h"
 #include "UObject/ConstructorHelpers.h"
-
 #include "Engine/Engine.h"
-#include "Public/MyFactory.h"
-#include "IAssetTools.h"
-#include "AssetToolsModule.h"
+
 #include "UnrealEd.h"
+#include "UObject/Package.h"
+#include "AssetRegistryModule.h"
+#include "MyPrimaryDataAsset.h"
 
 ...
 
 void ATestProjectGameMode::StartPlay()
 {
 	Super::StartPlay();
-  
-	UMyFactory* NewFactory = NewObject<UMyFactory>();
-	FAssetToolsModule& AssetToolsModule = FAssetToolsModule::GetModule();
-	UObject* NewAsset = AssetToolsModule.Get().CreateAsset(NewFactory->GetSupportedClass(), NewFactory);
+
+	FString AssetName = TEXT("MyPrimaryDataAsset");
+	FString PackageName = TEXT("/Game/");
+	PackageName += AssetName;
+
+	UPackage* Package = CreatePackage(NULL, *PackageName);
+	Package->FullyLoad();
+	
+	UMyPrimaryDataAsset* NewAsset = NewObject<UMyPrimaryDataAsset>(
+		Package, *AssetName, RF_Public | RF_Standalone | RF_MarkAsRootSet);
+	
+	NewAsset->ItemName = TEXT("NewAssetName");
+
+	Package->MarkPackageDirty();
+	FAssetRegistryModule::AssetCreated(NewAsset);
+
+	FString PackageFileName = FPackageName::LongPackageNameToFilename(
+		PackageName, FPackageName::GetAssetPackageExtension());
+
+	bool bSaved = UPackage::SavePackage(
+		Package,
+		NewAsset,
+		EObjectFlags::RF_Public | EObjectFlags::RF_Standalone,
+		*PackageFileName, 
+		GError, nullptr, true, true, SAVE_NoError);
+
 	TArray<UObject*> ObjectsToSync;
 	ObjectsToSync.Add(NewAsset);
 	GEditor->SyncBrowserToObjects(ObjectsToSync);
+
 }
 ```
 
 #### 실행 결과
-![image-center](/assets/images/unreal-profile-sample1.png){: .align-center}
+다음과 같이 에셋이 에디터에 저장된다.
+![image-center](/assets/images/unreal-create-asset-to-editor-result.png){: .align-center}
