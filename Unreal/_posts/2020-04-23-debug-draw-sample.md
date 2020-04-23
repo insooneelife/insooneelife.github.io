@@ -74,4 +74,3 @@ void Examples::DebugDrawExample(UWorld* World)
 	DrawDebugCircle(World, CPos, CF.Size(), 50, FColor(0, 0, 0), true, -1, 0, 2, CF.GetSafeNormal(), SideCF.GetSafeNormal(), false);
 }
 ```
-![image-center](/assets/images/unreal-debug-draw-sample2.png){: .align-center}
