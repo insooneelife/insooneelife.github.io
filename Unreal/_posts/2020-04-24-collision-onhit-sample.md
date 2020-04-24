@@ -39,11 +39,9 @@ void MyActor::OnHit(AActor* SelfActor, AActor* OtherActor, FVector NormalImpulse
 	if (JointMap.Contains(boneName.ToString()))
 	{
 		int JointInd = JointMap[boneName.ToString()];
-		//UE_LOG(LogHolodeck, Warning, TEXT(
-		//	"OnHit !!!!!!!!!!!!!  name : %s  index : %d  this actor : %s  other actor : %s"),
-		//	*boneName.ToString(), JointInd, *SelfActor->GetFName().ToString(), *OtherActor->GetFName().ToString());
-
-		AddHitToBuffer(boneName.ToString(), HitBoneLocation, NormalImpulse, PrivateData);
+		UE_LOG(LogHolodeck, Warning, TEXT(
+			"OnHit !!!!!!!!!!!!!  name : %s  index : %d  this actor : %s  other actor : %s"),
+			*boneName.ToString(), JointInd, *SelfActor->GetFName().ToString(), *OtherActor->GetFName().ToString());
 	}
 
 }
