@@ -1,0 +1,1 @@
+UWorld* World = GEngine->GetWorldContexts()[0].World();
