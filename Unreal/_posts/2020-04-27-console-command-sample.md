@@ -16,6 +16,7 @@ Unreal engine 콘솔 커맨드 관련 예제이다.
 
 ...
 
+// call this from start - ex)  gamemode being
 void Utility::InitConsoleCommand()
 {
 	FConsoleCommandWithArgsDelegate CurveByPathDelegate;
@@ -27,6 +28,7 @@ void Utility::InitConsoleCommand()
 		TEXT("insooneelife test cmd"), CurveByPathDelegate);
 }
 
+// this is static function
 void Utility::ConsoleCommand(const TArray<FString>& Args)
 {
 	UE_LOG(LogTemp, Warning, TEXT("#################"));
