@@ -7,6 +7,17 @@ categories:
 ---
 
 ### Physics Collision with AggregateGeom Shapes
+캐릭터가 공격할때 오른손 캡슐에 의한 충돌판정을 위한 예제이다.
+
+#### physics asset
+먼저 충돌판정에 사용할 BodyInstance이다. 
+이후 코드를 통해 이 BodyInstance의 궤적에 따른 충돌을 판정할 것이다.
+![image-center](/assets/images/unreal-physics-collision-agggeom-physics-asset.png){: .align-center}
+
+#### physics asset
+
+
+
 #### header
 
 ```c++
@@ -139,13 +150,20 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 }
 
-
 ```
 
 
+#### blueprint
+블루프린트 예제이다.
+1. OnComponentBeginOverlap 이벤트가 발생했을 때
+2. 현재 IsAttacking 상태일 때
+3. 충돌 대상이 자기자신이 아닐 때 (자기자신의 다른 컴포넌트와 충돌 이벤트가 발생하는 경우가 있음)
+4. 타겟 컴포넌트의 tag가 Root일 때
+화면에 대상에 대한 정보를 출력해준다.
 
 ![image-center](/assets/images/unreal-physics-collision-agggeom-blueprint.png){: .align-center}
 
-![image-center](/assets/images/unreal-physics-collision-agggeom-physics-asset.png){: .align-center}
 
+#### result
+결과 화면이다.
 ![image-center](/assets/images/unreal-physics-collision-agggeom-physics-result.png){: .align-center}
