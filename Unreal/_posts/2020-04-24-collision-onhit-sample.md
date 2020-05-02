@@ -46,6 +46,36 @@ void MyActor::OnHit(AActor* SelfActor, AActor* OtherActor, FVector NormalImpulse
 
 ```
 
+
+``` c++
+void AMyCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+	this->RootCapsule = Cast<UCapsuleComponent>(this->RootComponent);
+
+	// 생성자에서 동작하지 않는 경우가 있음
+	this->RootCapsule->OnComponentBeginOverlap.AddDynamic(this, &AMyCharacter::OnOverlapBegin);
+}
+
+void AMyCharacter::OnOverlapBegin(
+	UPrimitiveComponent* OverlappedComponent,
+	AActor* OtherActor,
+	UPrimitiveComponent* OtherComp,
+	int32 OtherBodyIndex,
+	bool bFromSweep,
+	const FHitResult & SweepResult)
+{
+	
+	UE_LOG(LogTemp, Warning, TEXT("actor : %s  component %s"),
+		*OtherActor->GetFullName(),
+		*OtherComp->GetFullName());
+
+	UE_LOG(LogTemp, Warning, TEXT("overlap component : %s  desc %s"), 
+		*OverlappedComponent->GetFullName(),
+		*OverlappedComponent->GetDesc());
+}
+```
+
 #### 실행 결과
 
 
