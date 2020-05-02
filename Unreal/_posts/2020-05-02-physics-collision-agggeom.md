@@ -141,3 +141,11 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 
 ```
+
+
+
+![image-center](/assets/images/unreal-physics-collision-agggeom-blueprint.png){: .align-center}
+
+![image-center](/assets/images/unreal-physics-collision-agggeom-physics-asset.png){: .align-center}
+
+![image-center](/assets/images/unreal-physics-collision-agggeom-physics-result.png){: .align-center}
