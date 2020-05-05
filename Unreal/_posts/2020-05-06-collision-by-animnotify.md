@@ -5,7 +5,13 @@ categories:
   - Collision
 ---
 
-header
+
+### Collision by animation notify
+애니메이션 notify를 통해 캐릭터 객체의 공격 궤적에 따른 충돌처리 예제이다.
+
+
+
+#### header
 ```c++
 // Fill out your copyright notice in the Description page of Project Settings.
 
@@ -51,7 +57,7 @@ private:
 ```
 
 
-source
+#### source
 ```c++
 void AMyCharacter::BeginPlay()
 {
