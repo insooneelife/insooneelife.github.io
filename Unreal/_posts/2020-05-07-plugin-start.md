@@ -73,4 +73,5 @@ FReply FMyPluginModule::OnClickButton()
 에디터를 끄고 다시 실행시키면 플러그인 모듈 소스가 적용된다.
 
 #### result
+에디터 툴바 플러그인 버튼 클릭 시 다음과 같이 ui 창이 생성된다.
 ![image-center](/assets/images/unreal-plugin-start-pluginui.png){: .align-center}
