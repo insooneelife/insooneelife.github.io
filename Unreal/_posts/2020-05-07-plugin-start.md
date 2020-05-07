@@ -70,6 +70,7 @@ FReply FMyPluginModule::OnClickButton()
 
 ```
 플러그인 코드는 수정 후 에디터에서 컴파일을 하더라도 바로 적용되지 않는다는 문제점이 있다.
+에디터를 끄고 다시 실행시키면 플러그인 모듈 소스가 적용된다.
 
 #### result
 ![image-center](/assets/images/unreal-plugin-start-pluginui.png){: .align-center}
