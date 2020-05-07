@@ -25,5 +25,47 @@ Unreal plugin 시작방법 예제이다.
 
 
 
+이후 플러그인 ui를 꾸미고 싶은 경우 OnSpawnPluginTab 함수에서 slate를 수정하면 된다.
+```c++
+...
+#include "Widgets/Input/SButton.h"
+...
+
+TSharedRef<SDockTab> FMyPluginModule::OnSpawnPluginTab(const FSpawnTabArgs& SpawnTabArgs)
+{
+	FText WidgetText = FText::Format(
+		LOCTEXT("WindowWidgetText", "Add code to {0} in {1} to override this window's contents"),
+		FText::FromString(TEXT("FMyPluginModule::OnSpawnPluginTab")),
+		FText::FromString(TEXT("MyPlugin.cpp"))
+		);
+	
+	return SNew(SDockTab)
+		.TabRole(ETabRole::NomadTab)
+		[
+			// Put your tab content here!
+			SNew(SBox)
+			.HAlign(HAlign_Center)
+			.VAlign(VAlign_Center)
+			[
+				SNew(SButton)
+				.Text(WidgetText)
+				// CreateRaw로 하지 않으면 컴파일러가 인식하지 못하는 문제가 있음
+				.OnClicked(FOnClicked::CreateRaw(this, &FMyPluginModule::OnClickButton))
+			]
+		];
+		
+}
+
+...
+
+FReply FMyPluginModule::OnClickButton()
+{
+	UE_LOG(LogTemp, Warning, TEXT("###############################"));
+
+	return FReply::Handled();
+}
+
+```
+플러그인 코드는 수정 후 에디터에서 컴파일을 하더라도 바로 적용되지 않는다는 문제점이 있다.
 
 
