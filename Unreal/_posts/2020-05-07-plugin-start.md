@@ -74,4 +74,4 @@ FReply FMyPluginModule::OnClickButton()
 
 #### result
 에디터 툴바 플러그인 버튼 클릭 시 다음과 같이 ui 창이 생성된다.
-![image-center](/assets/images/unreal-plugin-start-pluginui.png){: .align-center}
+![image-center](/assets/images/unreal-plugin-start-pluginui.png){: .align-left}
