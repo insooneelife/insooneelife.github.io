@@ -25,7 +25,10 @@ Unreal plugin 시작방법 예제이다.
 
 
 
-이후 플러그인 ui를 꾸미고 싶은 경우 OnSpawnPluginTab 함수에서 slate를 수정하면 된다.
+### Plugin ui
+이후 에디터 tool bar의 플러그인 버튼을 누르면 생성되는 플러그인 ui를 꾸미고 싶은 경우,
+OnSpawnPluginTab 함수에서 slate를 수정하면 된다.
+
 ```c++
 ...
 #include "Widgets/Input/SButton.h"
@@ -68,4 +71,5 @@ FReply FMyPluginModule::OnClickButton()
 ```
 플러그인 코드는 수정 후 에디터에서 컴파일을 하더라도 바로 적용되지 않는다는 문제점이 있다.
 
-
+#### result
+![image-center](/assets/images/unreal-plugin-start-pluginui.png){: .align-center}
