@@ -80,3 +80,103 @@ FReply FMyPluginModule::OnClickButton()
 #### result
 에디터 툴바 플러그인 버튼 클릭 시 다음과 같이 ui 창이 생성된다.
 ![image-center](/assets/images/unreal-plugin-start-pluginui.png){: .align-left}
+
+
+
+
+### slate ui 추가 
+```c++
+TSharedRef<SDockTab> FMyPluginModule::OnSpawnPluginTab(const FSpawnTabArgs& SpawnTabArgs)
+{
+	FText WidgetText = FText::Format(
+		LOCTEXT("#####WindowWidgetText", "Add code to {0} in {1} to override this window's contents"),
+		FText::FromString(TEXT("FMyPluginModule::OnSpawnPluginTab")),
+		FText::FromString(TEXT("MyPlugin.cpp"))
+		);
+	
+	FText SearchBoxText = FText::FromString(FString(TEXT("SearchBox")));
+
+
+	auto t = SNew(STextBlock)
+		.Text(FText::FromString(FString(TEXT("FileDirectory"))));
+	
+
+	return SNew(SDockTab)
+		.TabRole(ETabRole::NomadTab)
+		[
+			SNew(SUniformGridPanel)
+			.SlotPadding(FMargin(5.0f))
+			+ SUniformGridPanel::Slot(0, 0)
+			.HAlign(HAlign_Right)
+			[
+				SNew(SUniformGridPanel)
+				.SlotPadding(FMargin(5.0f))
+				+ SUniformGridPanel::Slot(0, 0)
+				.HAlign(HAlign_Center)
+				[
+					SNew(SButton)
+					.Text(FText::FromString(FString(TEXT("select file .wav"))))
+					.OnClicked(FOnClicked::CreateRaw(this, &FMyPluginModule::OnClickButton))
+				]
+				+ SUniformGridPanel::Slot(0, 1)
+				.HAlign(HAlign_Center)
+				[
+					SNew(STextBlock)
+					.Text(FText::FromString(FString(TEXT("FileDirectory"))))
+				]
+			]
+			+ SUniformGridPanel::Slot(0, 1)
+			.HAlign(HAlign_Right)
+			[
+				SNew(SUniformGridPanel)
+				.SlotPadding(FMargin(5.0f))
+				+ SUniformGridPanel::Slot(0, 0)
+				.HAlign(HAlign_Center)
+				[
+					SNew(SButton)
+					.Text(FText::FromString(FString(TEXT("select file .script"))))
+					.OnClicked(FOnClicked::CreateRaw(this, &FMyPluginModule::OnClickButton))
+				]
+				+ SUniformGridPanel::Slot(0, 1)
+				.HAlign(HAlign_Center)
+				[
+					SNew(STextBlock)
+					.Text(FText::FromString(FString(TEXT("FileDirectory"))))
+				]
+			]
+			+ SUniformGridPanel::Slot(0, 2)
+			.HAlign(HAlign_Center)
+			[
+				SNew(SBox)
+				.HAlign(HAlign_Center)
+				.VAlign(VAlign_Center)
+				[
+					SNew(SButton)
+					.Text(WidgetText)
+					.OnClicked(FOnClicked::CreateRaw(this, &FMyPluginModule::OnClickButton))
+				]
+			]
+			+ SUniformGridPanel::Slot(1, 0)
+			[
+				SNew(SBox)
+				.HAlign(HAlign_Center)
+				.VAlign(VAlign_Center)
+				[
+					SNew(SButton)
+					.Text(WidgetText)
+					.OnClicked(FOnClicked::CreateRaw(this, &FMyPluginModule::OnClickButton))
+				]
+			]
+			+ SUniformGridPanel::Slot(1, 1)
+			[
+				SNew(SBox)
+				.HAlign(HAlign_Center)
+				.VAlign(VAlign_Center)
+				[
+					SNew(SSearchBox)
+				]
+			]
+		];		
+}
+```
+
