@@ -86,6 +86,11 @@ FReply FMyPluginModule::OnClickButton()
 
 ### slate ui 추가 
 ```c++
+...
+#include "Widgets/Layout/SUniformGridPanel.h"
+
+...
+
 TSharedRef<SDockTab> FMyPluginModule::OnSpawnPluginTab(const FSpawnTabArgs& SpawnTabArgs)
 {
 	FText WidgetText = FText::Format(
@@ -179,4 +184,48 @@ TSharedRef<SDockTab> FMyPluginModule::OnSpawnPluginTab(const FSpawnTabArgs& Spaw
 		];		
 }
 ```
+
+#### result
+사진
+
+
+### 파일 탐색기 창 띄우기 (File Dialog)
+탐색기 창을 띄우기 위해서 DesktopPlatformModule을 사용해야 하는데,
+이는 언리얼 내 다른 모듈의 헤더이기 때문에 사용하기 위해 다른 모듈을 활성화 시켜주어야 한다.
+활성화 후 에디터를 다시 켜주어야 한다.
+
+```c++
+...
+
+#include "DesktopPlatformModule.h"
+#include "IDesktopPlatform.h"
+
+...
+
+FReply FMyPluginModule::OnClickButton()
+{
+	UE_LOG(LogTemp, Warning, TEXT("###############################"));
+
+	auto DesktopPlatform = FDesktopPlatformModule::Get();
+	if (DesktopPlatform == nullptr)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("DesktopPlatform == nullptr"));
+	}
+
+	auto FileNames = TArray<FString>();
+
+	DesktopPlatform->OpenFileDialog(
+		nullptr,
+		TEXT("Open SoFace Weight Curve"),
+		TEXT(""),
+		TEXT(""),
+		TEXT("Text (*.txt)|*.txt|Data (*.wav; *.script)|*.wav; *.script"),
+		EFileDialogFlags::Type::Multiple,
+		FileNames
+	);
+
+	return FReply::Handled();
+}
+```
+
 
