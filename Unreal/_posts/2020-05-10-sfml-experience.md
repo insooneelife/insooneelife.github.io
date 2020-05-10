@@ -4,7 +4,11 @@ categories:
   - SFML
 ---
 
-// SFML 사용 시 library
+// SFML 사용 시 library 
+// sfml-window-d.lib
+// sfml-system-d.lib
+// sfml-graphics-d.lib를 사용해야 함
+
 
 ```c++
 sf::RenderWindow window(sf::VideoMode(960, 640), "name");
