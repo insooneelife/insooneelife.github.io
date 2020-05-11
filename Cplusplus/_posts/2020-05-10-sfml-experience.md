@@ -4,6 +4,8 @@ categories:
   - SFML
 ---
 
+### sfml 시행착오 문서
+
 
 ```c++
 // SFML 사용 시 library 
