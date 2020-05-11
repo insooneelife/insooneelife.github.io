@@ -192,11 +192,22 @@ TSharedRef<SDockTab> FMyPluginModule::OnSpawnPluginTab(const FSpawnTabArgs& Spaw
 ### 파일 탐색기 창 띄우기 (File Dialog)
 탐색기 창을 띄우기 위해서 DesktopPlatformModule을 사용해야 하는데,
 이는 언리얼 내 다른 모듈의 헤더이기 때문에 사용하기 위해 따로 모듈을 활성화 시켜주어야 한다.
+모듈을 활성화시켜주기 위해 cs파일을 수정해야 한다.
 
-창 -> 개발자 툴 -> 모듈
-모듈 창이 켜지면 DesktopPlatform을 검색하고 로드해준다.
+Visual studio -> 솔루션 탐색기 -> MyPlugin/MyPlugin.Build.cs
+```c#
+PrivateDependencyModuleNames.AddRange(
+	new string[]
+	{
+		...
+		"DesktopPlatform"	// 새로 추가해준다.
+	}
+);
+```
 
-모듈 활성화 후 에디터를 다시 켜주어야 한다.
+모듈 활성화 후 새로 빌드 후 에디터를 다시 켜주어야 한다.
+
+
 
 ```c++
 ...
