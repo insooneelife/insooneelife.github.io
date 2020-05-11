@@ -8,6 +8,19 @@ categories:
 ### Unreal http request 
 언리얼에서 http request를 하는 예제이다.
 
+http request를 위해 사용하는 함수들은 다른 모듈로 분리되어 있다.
+그러므로 따로 모듈을 포함시켜주어야 한다.
+
+현재 프로젝트의 MyExample.Build.cs 파일에서
+```c#
+PrivateDependencyModuleNames.AddRange(
+	new string[] 
+	{ 
+		"Http", "JsonUtilities", "Json" 
+	});
+```
+다음 모듈들을 포함시켜준다.
+
 
 #### header
 ```c++
