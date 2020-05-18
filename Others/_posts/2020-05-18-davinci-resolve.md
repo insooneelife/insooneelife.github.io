@@ -1,5 +1,5 @@
 ---
-title: "Davinci Resolve"
+title: "[Others] Davinci Resolve"
 categories:
   - Davinci Resolve
 ---
