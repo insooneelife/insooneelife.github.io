@@ -1,3 +1,11 @@
+---
+title: "[Unreal] Slate Class"
+categories:
+  - Slate
+---
+
+### Make custom slate class
+Slate를 이용한 커스텀 클래스 ui 제작 예제이다.
 
 
 
