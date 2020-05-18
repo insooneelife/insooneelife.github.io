@@ -186,7 +186,7 @@ TSharedRef<SDockTab> FMyPluginModule::OnSpawnPluginTab(const FSpawnTabArgs& Spaw
 ```
 
 #### result
-사진
+![image-center](/assets/images/unreal-plugin-start-slateui.png){: .align-left}
 
 
 ### 파일 탐색기 창 띄우기 (File Dialog)
