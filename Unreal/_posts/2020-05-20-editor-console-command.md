@@ -10,10 +10,9 @@ categories:
 //...
 class FMyPluginModule : public IModuleInterface
 {
-public:
 //...
 	virtual void StartupModule() override;
-  void OnConsoleCommand();
+	void OnConsoleCommand();
 //...
 };
 ```
