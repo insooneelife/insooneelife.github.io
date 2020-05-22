@@ -65,3 +65,79 @@ capture.release()
 cv.destroyAllWindows()
 
 ```
+
+#### remove duplicated frames
+
+``` python
+import cv2 as cv
+import time
+import numpy as np
+from matplotlib import pyplot as plt
+
+methods = ['cv.TM_CCOEFF', 'cv.TM_CCOEFF_NORMED', 'cv.TM_CCORR',
+           'cv.TM_CCORR_NORMED', 'cv.TM_SQDIFF', 'cv.TM_SQDIFF_NORMED']
+
+def template_match(img, template):
+    method = cv.TM_CCOEFF_NORMED
+    img = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+    template = cv.cvtColor(template, cv.COLOR_BGR2GRAY)
+
+    # Apply template Matching
+    res = cv.matchTemplate(img, template, method)
+    min_val, max_val, min_loc, max_loc = cv.minMaxLoc(res)
+    return max_val
+
+threshold = 0.997
+save_frame_size = 3
+capture = cv.VideoCapture("window.mp4")
+fps = int(capture.get(cv.CAP_PROP_FPS))
+prev_frame = None
+i = 0
+frame_array = []
+start = time.time()
+k = 0
+
+while(capture.isOpened()):
+    ret, frame = capture.read()
+    width = int(capture.get(cv.CAP_PROP_FRAME_WIDTH))
+    height = int(capture.get(cv.CAP_PROP_FRAME_HEIGHT))
+    size = (width, height)
+    if not ret:
+        break
+
+    if prev_frame is None:
+        prev_frame = frame
+
+    if k > 0:
+        frame_array.append(frame)
+        k = k - 1
+    else:
+        val = template_match(frame, prev_frame)
+        print('idx, val', i, val)
+        if val < threshold:
+            frame_array.append(frame)
+            k = save_frame_size
+            #cv.imshow("prev_frame" + str(i) + " | " + str(val), prev_frame)
+            #cv.imshow("frame" + str(i) + " | " + str(val), frame)
+
+    prev_frame = frame
+    i = i + 1
+
+fourcc = cv.VideoWriter_fourcc(*'DIVX')
+pathout = 'output.avi'
+
+out = cv.VideoWriter(pathout, fourcc, fps, size)
+
+for i in range(len(frame_array)):
+    # writing to a image array
+    out.write(frame_array[i])
+out.release()
+
+end = time.time()
+print ("elapsed seconds : ", (end - start))
+
+capture.release()
+cv.destroyAllWindows()
+```
+
+
