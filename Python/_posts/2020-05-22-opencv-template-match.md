@@ -71,11 +71,18 @@ cv.destroyAllWindows()
 ``` python
 import cv2 as cv
 import time
+import sys
+import argparse
 import numpy as np
 from matplotlib import pyplot as plt
 
 methods = ['cv.TM_CCOEFF', 'cv.TM_CCOEFF_NORMED', 'cv.TM_CCORR',
            'cv.TM_CCORR_NORMED', 'cv.TM_SQDIFF', 'cv.TM_SQDIFF_NORMED']
+
+parser = argparse.ArgumentParser(description='Process some integers.')
+parser.add_argument('--filename', type=str, help='ex) window.mp4')
+parser.add_argument('--save_frames', type=int, default=1, help='the size of frames if template match success')
+parser.add_argument('--threshold', type=float, default=0.997, help='threshold val of template match filter value')
 
 def template_match(img, template):
     method = cv.TM_CCOEFF_NORMED
@@ -87,9 +94,12 @@ def template_match(img, template):
     min_val, max_val, min_loc, max_loc = cv.minMaxLoc(res)
     return max_val
 
-threshold = 0.997
-save_frame_size = 3
-capture = cv.VideoCapture("window.mp4")
+args = parser.parse_args()
+
+threshold = args.threshold
+save_frames = args.save_frames
+capture = cv.VideoCapture(args.filename)
+length = int(capture.get(cv.CAP_PROP_FRAME_COUNT))
 fps = int(capture.get(cv.CAP_PROP_FPS))
 prev_frame = None
 i = 0
@@ -113,10 +123,10 @@ while(capture.isOpened()):
         k = k - 1
     else:
         val = template_match(frame, prev_frame)
-        print('idx, val', i, val)
+        print('idx, max, val', i, length, val)
         if val < threshold:
             frame_array.append(frame)
-            k = save_frame_size
+            k = save_frames
             #cv.imshow("prev_frame" + str(i) + " | " + str(val), prev_frame)
             #cv.imshow("frame" + str(i) + " | " + str(val), frame)
 
