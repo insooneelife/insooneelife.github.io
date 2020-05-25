@@ -66,7 +66,7 @@ cv.destroyAllWindows()
 
 ```
 
-#### remove duplicated frames
+#### remove duplicated frames from video
 
 ``` python
 import cv2 as cv
@@ -150,4 +150,121 @@ capture.release()
 cv.destroyAllWindows()
 ```
 
+#### remove duplicated frame from video (fast)
+```python
+# USAGE
+# python readfast.py --video=snake.mp4
+
+# import the necessary packages
+from imutils.video import FileVideoStream
+from imutils.video import FPS
+import numpy as np
+import argparse
+import imutils
+import time
+import cv2 as cv
+
+def template_match(img, template):
+    method = cv.TM_CCOEFF_NORMED
+    img = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+    template = cv.cvtColor(template, cv.COLOR_BGR2GRAY)
+
+    # Apply template Matching
+    res = cv.matchTemplate(img, template, method)
+    min_val, max_val, min_loc, max_loc = cv.minMaxLoc(res)
+    return max_val
+
+# construct the argument parse and parse the arguments
+ap = argparse.ArgumentParser()
+ap.add_argument("-v", "--video", required=True, help="path to input video file")
+ap.add_argument('--save_frames', type=int, default=1, help='the size of frames if template match success')
+ap.add_argument('--threshold', type=float, default=0.997, help='threshold val of template match filter value')
+
+args = ap.parse_args()
+
+# start the file video stream thread and allow the buffer to
+# start to fill
+print("[INFO] starting video file thread...")
+fvs = FileVideoStream(args.video).start()
+time.sleep(1.0)
+
+# start the FPS timer
+fps = FPS().start()
+
+threshold = args.threshold
+save_frames = args.save_frames
+capture = cv.VideoCapture(args.video)
+length = int(capture.get(cv.CAP_PROP_FRAME_COUNT))
+cap_fps = int(capture.get(cv.CAP_PROP_FPS))
+prev_frame = None
+i = 0
+k = 0
+frame_array = []
+
+# loop over frames from the video file stream
+while fvs.more():
+	# grab the frame from the threaded video file stream, resize
+	# it, and convert it to grayscale (while still retaining 3
+	# channels)
+	frame = fvs.read()
+	if frame is None:
+		continue
+	#frame = imutils.resize(frame, width=450)
+	#frame = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
+	#frame = np.dstack([frame, frame, frame])
+
+	# display the size of the queue on the frame
+	#cv.putText(frame, "Queue Size: {}".format(fvs.Q.qsize()),
+	#	(10, 30), cv.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+
+	# show the frame and update the FPS counter
+	#cv.imshow("Frame", frame)
+	#cv.waitKey(1)
+
+	width = int(capture.get(cv.CAP_PROP_FRAME_WIDTH))
+	height = int(capture.get(cv.CAP_PROP_FRAME_HEIGHT))
+	size = (width, height)
+
+	if prev_frame is None:
+		prev_frame = frame
+
+	if k > 0:
+		frame_array.append(frame)
+		k = k - 1
+	else:
+		val = template_match(frame, prev_frame)
+		print('idx, max, val', i, length, val)
+		if val < threshold:
+			frame_array.append(frame)
+			k = save_frames
+		# cv.imshow("prev_frame" + str(i) + " | " + str(val), prev_frame)
+		# cv.imshow("frame" + str(i) + " | " + str(val), frame)
+
+	prev_frame = frame
+	i = i + 1
+
+	fps.update()
+
+fourcc = cv.VideoWriter_fourcc(*'mp4v')
+pathout = 'output.mp4'
+
+out = cv.VideoWriter(pathout, fourcc, cap_fps, size)
+
+for i in range(len(frame_array)):
+    # writing to a image array
+    out.write(frame_array[i])
+out.release()
+
+# stop the timer and display FPS information
+fps.stop()
+print("[INFO] elasped time: {:.2f}".format(fps.elapsed()))
+print("[INFO] approx. FPS: {:.2f}".format(fps.fps()))
+
+
+
+
+# do a bit of cleanup
+cv.destroyAllWindows()
+fvs.stop()
+```
 
