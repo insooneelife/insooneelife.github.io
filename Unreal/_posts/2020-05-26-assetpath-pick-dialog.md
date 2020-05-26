@@ -32,4 +32,4 @@ if (PickAssetPathWidget->ShowModal() == EAppReturnType::Ok)
 
 
 #### result
-![image-center](/assets/images/unreal-detail-editor-customize.png){: .align-left}
+![image-center](/assets/images/unreal-assetpath-picker-dialog.png){: .align-left}
