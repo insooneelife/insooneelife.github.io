@@ -194,3 +194,7 @@ void AMenuHUD::BeginPlay()
 ```
 
 
+#### result
+![image-center](/assets/images/unreal-slate-class-result.png){: .align-left}
+
+
