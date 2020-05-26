@@ -99,4 +99,4 @@ TSharedRef<SWindow> Window = PropertyModule.CreateFloatingDetailsView(ObjectToVi
 ```
 
 #### 
-![image-center](/assets/images/unreal-detail-editor-customization.png){: .align-left}
+![image-center](/assets/images/unreal-detail-editor-customize.png){: .align-left}
