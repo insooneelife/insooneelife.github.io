@@ -98,5 +98,5 @@ ObjectToView.Add(ToolInstance);
 TSharedRef<SWindow> Window = PropertyModule.CreateFloatingDetailsView(ObjectToView, true);
 ```
 
-unreal-detail-editor-customization
-
+#### 
+![image-center](/assets/images/unreal-detail-editor-customization.png){: .align-left}
