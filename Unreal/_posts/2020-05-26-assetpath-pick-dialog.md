@@ -36,6 +36,7 @@ if (PickAssetPathWidget->ShowModal() == EAppReturnType::Ok)
 
 
 #### customized class
+#### header
 
 ```c++
 #pragma once
@@ -92,6 +93,7 @@ protected:
 
 ```
 
+#### source
 ```c++
 // Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
 
