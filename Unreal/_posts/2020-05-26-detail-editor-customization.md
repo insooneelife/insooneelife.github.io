@@ -359,4 +359,5 @@ void SMyDetailViewWindow::OnDetailViewWindowClosed(const TSharedRef<SWindow>& Wi
 #### result
 다음과 같이 property detail view가 포함되어있으며, 두 개의 추가적인 버튼을 아래에 배치한 형태로 제작이 가능하다.
 
-![image-center](/assets/images/unreal-detail-editor-customize.png){: .align-left}
+
+![image-center](/assets/images/unreal-detail-editor-customize-class.png){: .align-left}
