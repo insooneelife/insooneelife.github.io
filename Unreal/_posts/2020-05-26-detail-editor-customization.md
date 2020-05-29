@@ -106,8 +106,66 @@ TSharedRef<SWindow> Window = PropertyModule.CreateFloatingDetailsView(ObjectToVi
 
 #### customized class
 다음과 같이 윈도우 내에 detail view만 넣은 형태로 새로운 SWindow class 형태로 제작할수도 있다.
+이렇게 함으로써 property editor를 활용한 ui를 부품으로 더 복잡한 ui를 제작할 수 있다.
 
-#### header
+#### BaseEditorTool.h
+```c++
+// Fill out your copyright notice in the Description page of Project Settings.
+
+#pragma once
+
+#include "CoreMinimal.h"
+#include "UObject/NoExportTypes.h"
+#include "Animation/Skeleton.h"
+#include "BaseEditorTool.generated.h"
+
+
+UENUM(BlueprintType)
+enum class LanguageMode : uint8
+{
+	Korean,
+	English
+};
+
+UCLASS()
+class MYPLUGIN_API UBaseEditorTool : public UObject
+{
+	GENERATED_BODY()
+	
+public:
+	UBaseEditorTool();
+
+
+	UPROPERTY(EditAnywhere, Category = "Voice Characteristics")
+	LanguageMode Language;
+
+	//UPROPERTY(EditAnywhere, Category = "Conversion")
+	FString SaveAssetTo;
+
+	UPROPERTY(EditAnywhere, Category = "Conversion")
+	USkeleton* TargetSkeleton;
+
+	UPROPERTY(EditAnywhere, Category = "Conversion")
+	bool bImportAudio;
+
+	UPROPERTY(EditAnywhere, Category = "Conversion")
+	bool bInsertPlaySoundNotify;
+
+	UPROPERTY(EditAnywhere, Category = "FilesToDump")
+	bool bPhoneme;
+
+	UPROPERTY(EditAnywhere, Category = "FilesToDump")
+	bool bAnimClip;
+	
+	UPROPERTY(EditAnywhere, Category = "FilesToDump")
+	bool bConversionLog;
+
+};
+
+```
+
+
+#### SMyDetailViewWindow.h
 ```c++
 // Fill out your copyright notice in the Description page of Project Settings.
 
@@ -144,7 +202,7 @@ private:
 
 ```
 
-#### source
+#### SMyDetailViewWindow.cpp
 ```c++
 // Fill out your copyright notice in the Description page of Project Settings.
 
@@ -297,3 +355,8 @@ void SMyDetailViewWindow::OnDetailViewWindowClosed(const TSharedRef<SWindow>& Wi
 #undef LOCTEXT_NAMESPACE
 ```
 
+
+#### result
+다음과 같이 property detail view가 포함되어있으며, 두 개의 추가적인 버튼을 아래에 배치한 형태로 제작이 가능하다.
+
+![image-center](/assets/images/unreal-detail-editor-customize.png){: .align-left}
