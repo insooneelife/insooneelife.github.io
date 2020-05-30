@@ -48,7 +48,7 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	
+	 
 private:
 	FBodyInstance * RHand;	
 	FVector SaveAttackStartPos;
@@ -119,3 +119,21 @@ void AMyCharacter::AttackEnd()
 
 }
 ```
+### Add animation notify
+애니메이션의 특정 상태에서 notify 이벤트를 발생시키도록 AttackStart, AttackEnd notify를 생성해준다.
+AttackStart는 공격을 위해 주먹을 높이 든 상태이고,
+AttackEnd는 공격 충돌 판정의 끝 상태이다.
+
+![image-center](/assets/images/unreal-collision-by-animnotify-addnotify.png){: .align-center}
+
+
+### Animation blueprint
+애니메이션 몽타주 블루프린트에서 notify를 받을 시 c++ 코드에 정의된 함수를 호출해주도록 한다.
+![image-center](/assets/images/unreal-collision-by-animnotify-animblueprint.png){: .align-center}
+
+
+### result
+주먹을 휘두르면 그 궤적에 포함된 대상 객체들을 쿼리해 온다. 
+이후에 이 객체들을 활용하여 원하는 컨텐츠 코드를 작성할 수 있을 것이다.
+![image-center](/assets/images/unreal-collision-by-animnotify-result.png){: .align-center}
+
