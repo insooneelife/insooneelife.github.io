@@ -118,9 +118,9 @@ void ATestProjectGameMode::StartPlay()
 
 
 
-#### gamemode에서 에셋 로드
-다음 코드는 에디터에서도 동작하는 코드이다.
-주의할 점은 Asset은 StartupModule 때 준비되지 않았을 수도 있다.
+#### Asset 로드
+모듈에서 Asset을 로드해야하는 경우가 생길 수 있다.
+(로드 시 주의할 점은 Asset은 StartupModule 때 준비되지 않았을 수도 있다.)
 ```c++
 	FAssetRegistryModule& AssetRegistryModule =
 		FModuleManager::LoadModuleChecked<FAssetRegistryModule>("AssetRegistry");
