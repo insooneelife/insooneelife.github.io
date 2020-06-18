@@ -16,13 +16,13 @@ Unreal engine 콘솔 커맨드 관련 예제이다.
 // call this from start - ex)  gamemode being
 void Utility::InitConsoleCommand()
 {
-	FConsoleCommandWithArgsDelegate CurveByPathDelegate;
+	FConsoleCommandWithArgsDelegate Delegate;
 
-	CurveByPathDelegate.BindStatic(&Utility::ConsoleCommand);
+	Delegate.BindStatic(&Utility::ConsoleCommand);
 
 	IConsoleManager::Get().RegisterConsoleCommand(
 		TEXT("insooneelifeCmd"),
-		TEXT("insooneelife test cmd"), CurveByPathDelegate);
+		TEXT("insooneelife test cmd"), Delegate);
 }
 
 // this is static function
