@@ -1,6 +1,13 @@
+---
+title: "[Unreal] Serialize"
+categories:
+  - Serialize
+---
 
 
+#### File Read Write
 
+```c++
 void FNFaceModule::WriteTargetToFile()
 {
 	FString FullPath = FString::Printf(TEXT("%s%s"), *FPaths::ProjectSavedDir(), TEXT("NFaceConvertData.txt"));
@@ -36,3 +43,6 @@ void FNFaceModule::ReadTargetFromFile()
 
 	}
 }
+```
+
+
