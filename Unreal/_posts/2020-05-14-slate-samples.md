@@ -13,9 +13,13 @@ Unreal ui framework인 slate에 대한 예제이다.
 ```c++
 #include "Widgets/Input/SButton.h"
 
-SNew(SButton)
-	.Text(WidgetText)
-	.OnClicked(FOnClicked::CreateRaw(this, &FMyPluginModule::OnClickButton))
+TSharedPtr<SWidget> FMyPluginModule::Create()
+{
+	return SNew(SButton)
+		.Text(WidgetText)
+		.OnClicked(FOnClicked::CreateRaw(this, &FMyPluginModule::OnClickButton));
+}
+
 
 FReply FMyPluginModule::OnClickButton()
 {
@@ -24,6 +28,7 @@ FReply FMyPluginModule::OnClickButton()
 	return FReply::Handled();
 }
 
+
 ```
 
 #### SAssetSearchBox
@@ -31,11 +36,15 @@ FReply FMyPluginModule::OnClickButton()
 // "EditorWidgets" Module
 #include "SAssetSearchBox.h"
 
-SNew(SAssetSearchBox)
-  .OnTextChanged(FOnTextChanged::CreateRaw(this, &FMyPluginModule::OnSearchBoxChanged))
-  .OnTextCommitted(FOnTextCommitted::CreateRaw(this, &FMyPluginModule::OnSearchBoxCommitted))
-  .DelayChangeNotificationsWhileTyping(true)
-	.HintText(LOCTEXT("SearchHint", "Search..."))
+TSharedPtr<SWidget> FMyPluginModule::Create()
+{
+	return SNew(SAssetSearchBox)
+    	.OnTextChanged(FOnTextChanged::CreateRaw(this, &FMyPluginModule::OnSearchBoxChanged))
+    	.OnTextCommitted(FOnTextCommitted::CreateRaw(this, &FMyPluginModule::OnSearchBoxCommitted))
+    	.DelayChangeNotificationsWhileTyping(true)
+    	.HintText(LOCTEXT("SearchHint", "Search..."));
+}
+
 
 // searchbox 내부 텍스트 변경 시 호출
 void FMyPluginModule::OnSearchBoxChanged(const FText& InSearchText)
@@ -56,9 +65,13 @@ void FMyPluginModule::OnSearchBoxCommitted(const FText& InSearchText, ETextCommi
 #include "AssetManagerEditorModule.h"
 
 
-IAssetManagerEditorModule::MakePrimaryAssetTypeSelector(
-	FOnGetPrimaryAssetDisplayText::CreateRaw(this, &FMyPluginModule::GetDisplayText),
-	FOnSetPrimaryAssetType::CreateRaw(this, &FMyPluginModule::OnTypeSelected))
+TSharedPtr<SWidget> FMyPluginModule::Create()
+{
+	return IAssetManagerEditorModule::MakePrimaryAssetTypeSelector(
+		FOnGetPrimaryAssetDisplayText::CreateRaw(this, &FMyPluginModule::GetDisplayText),
+		FOnSetPrimaryAssetType::CreateRaw(this, &FMyPluginModule::OnTypeSelected));
+}
+
 
 FText FMyPluginModule::GetDisplayText() const
 {
