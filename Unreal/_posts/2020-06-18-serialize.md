@@ -46,7 +46,7 @@ void MyModule::ReadTargetFromFile()
 }
 ```
 
-#### File Read Write
+#### Object Serialize and Read Write
 UObject Serialize 예제이다.
 UPROPERTY로 정의된 변수들은 모두 기본적으로 직렬화된다.
 
