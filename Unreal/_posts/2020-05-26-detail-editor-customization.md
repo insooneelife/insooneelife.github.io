@@ -6,6 +6,28 @@ categories:
   - Customization
 ---
 
+#### Modules
+다음 모듈들을 미리 추가해두자.
+```c#
+PrivateDependencyModuleNames.AddRange(
+			new string[]
+			{
+				"Projects",
+				"InputCore",
+				"UnrealEd",
+				"LevelEditor",
+				"CoreUObject",
+				"Engine",
+				"Slate",
+				"SlateCore",
+				"EditorScriptingUtilities",
+				"EditorStyle",
+				"DesktopPlatform",
+				// ... add private dependencies that you statically link with here ...	
+			}
+			);
+```
+
 
 #### UMyObject
 디테일 패널의 표시될 데이터를 갖는 타겟 오브젝트로 일반적인 UObject를 상속한 클래스이다.
