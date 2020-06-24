@@ -304,21 +304,170 @@ void MyCustomization::OnCheckInsertPlaySoundNotify(ECheckBoxState State)
 
 ```
 
+#### SMyWindow
+위에 정의한 UMyObject의 데이터를 표시해줄 수 있는 윈도우를 언리얼 에디터 상에 띄우기 위해,
+프로퍼티 에디터를 이용하여 SWindow 클래스를 제작한다.
+
+#### header
+```c++
+#pragma once
+
+#include "CoreMinimal.h"
+#include "Input/Reply.h"
+#include "Widgets/SWindow.h"
+#include "UObject/WeakObjectPtrTemplates.h"
+
+class UMyObject;
+
+class MYPLUGIN_API SMyWindow : public SWindow
+{
+public:
+	SLATE_BEGIN_ARGS(SMyWindow) {}
+	SLATE_END_ARGS()
+
+	void Construct(const FArguments& InArgs);
+
+	EAppReturnType::Type ShowModal();
+private:
+
+	FReply OnClickCancel();
+	FReply OnClickAddFiles();
+	void OnClosed(const TSharedRef<SWindow>& Window);
+
+private:
+	EAppReturnType::Type UserResponse;
+	UMyObject* TargetObject;
+};
+
+```
+
+#### source
+```c++
+#include "SMyWindow.h"
+#include "MyObject.h"
+
+#include "PropertyEditing.h"
+#include "Modules/ModuleManager.h"
+#include "Framework/Application/SlateApplication.h"
+#include "SlateBasics.h"
+#include "SlateExtras.h"
+#include "Editor/EditorEngine.h"
+#include "DesktopPlatformModule.h"	//"DesktopPlatform",
+#include "IDesktopPlatform.h"
+#include "Editor.h"
+
+#define LOCTEXT_NAMESPACE "SNFaceConvertWindow"
+
+void SMyWindow::Construct(const FArguments& InArgs)
+{
+	// create detail view
+	FDetailsViewArgs Args;
+	Args.bHideSelectionTip = true;
+	Args.bAllowSearch = false;
+
+	// UMyObject를 프로퍼티 에디터 커스터마이징 타겟으로 잡는다.
+	TargetObject = NewObject<UMyObject>();
+	TargetObject->AddToRoot();
+	TArray<UObject*> ObjectToView;
+	ObjectToView.Add(TargetObject);
+
+	FPropertyEditorModule& PropertyEditorModule =
+		FModuleManager::GetModuleChecked<FPropertyEditorModule>("PropertyEditor");
+	TSharedRef<IDetailsView> DetailView = PropertyEditorModule.CreateDetailView(Args);
+
+	DetailView->SetObjects(ObjectToView);
+
+	SWindow::Construct(
+		SWindow::FArguments()
+		.Title(NSLOCTEXT("PropertyEditor", "WindowTitle", "Property Editor"))
+		.ClientSize(FVector2D(500, 650))
+		[
+			SNew(SBorder)
+			.BorderImage(FEditorStyle::GetBrush(TEXT("PropertyWindow.WindowBorder")))
+		[
+			SNew(SVerticalBox)
+			+ SVerticalBox::Slot()
+		.FillHeight(1)
+		.Padding(3)
+		[
+			DetailView
+		]
+	+ SVerticalBox::Slot()
+		.AutoHeight()
+		.Padding(3)
+		[
+			SNew(SVerticalBox)
+			+ SVerticalBox::Slot() // Add user input block
+		.Padding(2, 2, 2, 4)
+		.AutoHeight()
+		.HAlign(HAlign_Right)
+		.VAlign(VAlign_Bottom)
+		[
+			SNew(SUniformGridPanel)
+			.SlotPadding(FEditorStyle::GetMargin("StandardDialog.SlotPadding"))
+		.MinDesiredSlotWidth(FEditorStyle::GetFloat("StandardDialog.MinDesiredSlotWidth"))
+		.MinDesiredSlotHeight(FEditorStyle::GetFloat("StandardDialog.MinDesiredSlotHeight"))
+		+ SUniformGridPanel::Slot(0, 0)
+		[
+			SNew(SButton)
+			.Text(LOCTEXT("AddFiles", "Add Files(s)..."))
+		.HAlign(HAlign_Center)
+		.ContentPadding(FEditorStyle::GetMargin("StandardDialog.ContentPadding"))
+		.OnClicked(this, &SMyWindow::OnClickAddFiles)
+		]
+	+ SUniformGridPanel::Slot(1, 0)
+		[
+			SNew(SButton)
+			.Text(LOCTEXT("Cancel", "Cancel"))
+		.HAlign(HAlign_Center)
+		.ContentPadding(FEditorStyle::GetMargin("StandardDialog.ContentPadding"))
+		.OnClicked(this, &SMyWindow::OnClickCancel)
+		]
+		]
+		]
+		]
+		]
+	);
+
+
+	this->SetOnWindowClosed(FOnWindowClosed::CreateRaw(this, &SMyWindow::OnClosed));
+}
+
+
+FReply SMyWindow::OnClickCancel()
+{
+	UE_LOG(LogTemp, Warning, TEXT("#### OnClickCancel ####"));
+	RequestDestroyWindow();
+	return FReply::Handled();
+}
+
+FReply SMyWindow::OnClickAddFiles()
+{
+	UE_LOG(LogTemp, Warning, TEXT("#### OnClickAddFiles ####"));
+	
+	return FReply::Handled();
+}
+
+
+void SMyWindow::OnClosed(const TSharedRef<SWindow>& Window)
+{
+	UE_LOG(LogTemp, Warning, TEXT("#### OnClosed ####"));
+	TargetObject->RemoveFromRoot();
+}
+
+EAppReturnType::Type SMyWindow::ShowModal()
+{
+	GEditor->EditorAddModalWindow(SharedThis(this));
+	return UserResponse;
+}
+
+
+#undef LOCTEXT_NAMESPACE
+```
+
 
 #### MyPlugin.cpp
-
-다음 코드를 통해 BaseEditorToolCustomization을 커스터마이즈 클래스로 등록시킨다.
-이 코드 이후로 BaseEditorToolCustomization 클래스는 이벤트를 받을 수 있게 된다.
-
-#### code
-다음 코드를 StartupModule과 같은 함수에서 호출해주면 된다.
-```c++
-FPropertyEditorModule& PropertyModule = 
-		FModuleManager::LoadModuleChecked<FPropertyEditorModule>("PropertyEditor");
-
-	PropertyModule.RegisterCustomClassLayout(
-		"MyObject", FOnGetDetailCustomizationInstance::CreateStatic(&MyCustomization::MakeInsance));
-```
+MyPlugin 코드에서 플러그인 버튼이 눌러졌을 때 SMyWindow를 띄우도록 한다.
 
 ```c++
 // Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
@@ -409,6 +558,7 @@ void FMyPluginModule::PluginButtonClicked()
 					   );
 
 
+	// SMyWindow를 띄운다.
 	TSharedRef<SMyWindow> Window = SNew(SMyWindow);
 
 	if (Window->ShowModal() == EAppReturnType::Ok)
@@ -508,20 +658,6 @@ void FMyPluginModule::CreateAsset()
 IMPLEMENT_MODULE(FMyPluginModule, MyPlugin)
 ```
 
-
-
-다음 코드를 호출하여 detail panel을 생성한다.
-Ex) 에디터 모듈 버튼 클릭 이벤트에서 호출
-```c++
-UBaseEditorTool* ToolInstance = NewObject<UBaseEditorTool>(GetTransientPackage(), ToolClass);
-ToolInstance->AddToRoot();
-
-FPropertyEditorModule& PropertyModule = FModuleManager::LoadModuleChecked<FPropertyEditorModule>("PropertyEditor");
-	
-TArray<UObject*> ObjectToView;
-ObjectToView.Add(ToolInstance);
-TSharedRef<SWindow> Window = PropertyModule.CreateFloatingDetailsView(ObjectToView, true);
-```
 
 
 
