@@ -8,6 +8,59 @@ categories:
 #### File Read Write
 파일 읽기 쓰기 예제이다.
 
+#### MyObject.h
+```c++
+#pragma once
+
+#include "CoreMinimal.h"
+#include "UObject/NoExportTypes.h"
+#include "Animation/Skeleton.h"
+#include "MyObject.generated.h"
+
+
+UENUM(BlueprintType)
+enum class EType : uint8
+{
+	Type1,
+	Type2
+};
+
+UCLASS()
+class MYPLUGIN_API UMyObject : public UObject
+{
+	GENERATED_BODY()
+	
+public:
+	UMyObject() {}
+
+
+	UPROPERTY(EditAnywhere, Category = "Voice Characteristics")
+		EType Language;
+
+	UPROPERTY(EditAnywhere, Category = "Conversion")
+		FString SaveAssetTo;
+
+	UPROPERTY(EditAnywhere, Category = "Conversion")
+		USkeleton* TargetSkeleton;
+
+	UPROPERTY(EditAnywhere, Category = "Conversion")
+		bool bImportAudio;
+
+	UPROPERTY(EditAnywhere, Category = "Conversion")
+		bool bInsertPlaySoundNotify;
+
+	UPROPERTY(EditAnywhere, Category = "FilesToDump")
+		bool bPhoneme;
+
+	UPROPERTY(EditAnywhere, Category = "FilesToDump")
+		bool bAnimClip;
+
+	UPROPERTY(EditAnywhere, Category = "FilesToDump")
+		bool bConversionLog;
+};
+
+```
+
 ```c++
 void MyModule::WriteTargetToFile()
 {
