@@ -6,6 +6,14 @@ categories:
   - Customization
 ---
 
+#### Detail Editor Customization
+언리얼 커스텀 에디터를 제작함에 있어서 가장 중요한 부분인 custom property editor를 제작하는 내용이다.
+
+Property editor란 다음과 같이 사용자가 정의한 어떤 데이터의 프로퍼티를 언리얼 ui상에 표시하고, 또 수정할 수 있도록 해주는 editor이다. 
+![image-center](/assets/images/unreal-detail-editor-customization.png){: .align-left}
+
+
+
 #### Modules
 다음 모듈들을 미리 추가해두자.
 ```c#
@@ -29,7 +37,7 @@ PrivateDependencyModuleNames.AddRange(
 ```
 
 
-#### UMyObject
+#### 데이터 정의 (UMyObject)
 디테일 패널의 표시될 데이터를 갖는 타겟 오브젝트로 일반적인 UObject를 상속한 클래스이다.
 디테일 패널에서 수정하고 싶은 프로퍼티들을 정의해주면 된다.
 
@@ -86,7 +94,7 @@ public:
 ```
 
 
-#### MyCustomization
+#### 데이터 커스터마이징 (MyCustomization)
 UMyObject에 정의된 데이터로 디테일 패널을 실질적으로 꾸며주는 부분이다.
 CustomizeDetails 함수가 호출에서 디테일 패널을 꾸며주는 코드를 작성하면 된다.
 CustomizeDetails는 디테일 패널이 생성되거나 수정사항이 생길 때 호출된다.
@@ -326,7 +334,7 @@ void MyCustomization::OnCheckInsertPlaySoundNotify(ECheckBoxState State)
 
 ```
 
-#### SMyWindow
+#### 에디터 윈도우 (SMyWindow)
 위에 정의한 UMyObject의 데이터를 표시해줄 수 있는 윈도우를 언리얼 에디터 상에 띄우기 위해,
 프로퍼티 에디터를 이용하여 SWindow 클래스를 제작한다.
 
@@ -488,7 +496,7 @@ EAppReturnType::Type SMyWindow::ShowModal()
 ```
 
 
-#### MyPlugin.cpp
+#### 플러그인 코드 (MyPlugin.cpp)
 MyPlugin 코드에서 플러그인 버튼이 눌러졌을 때 SMyWindow를 띄우도록 한다.
 
 ```c++
