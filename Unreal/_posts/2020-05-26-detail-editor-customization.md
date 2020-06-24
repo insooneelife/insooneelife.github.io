@@ -682,7 +682,7 @@ IMPLEMENT_MODULE(FMyPluginModule, MyPlugin)
 
 #### 결과 화면
 
-![image-center](/assets/images/unreal-slate-class-result.png){: .align-left}
+![image-center](/assets/images/unreal-detail-editor-customization.png){: .align-left}
 
 
 
