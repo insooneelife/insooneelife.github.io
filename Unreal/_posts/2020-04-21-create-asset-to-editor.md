@@ -114,3 +114,26 @@ void ATestProjectGameMode::StartPlay()
 #### 실행 결과
 다음과 같이 에셋이 에디터에 저장된다.
 ![image-center](/assets/images/unreal-create-asset-to-editor-result.png){: .align-center}
+
+
+
+
+#### Asset 로드
+모듈에서 Asset을 로드해야하는 경우가 생길 수 있다.
+(로드 시 주의할 점은 Asset은 StartupModule 때 준비되지 않았을 수도 있다.)
+```c++
+	FAssetRegistryModule& AssetRegistryModule =
+		FModuleManager::LoadModuleChecked<FAssetRegistryModule>("AssetRegistry");
+	FAssetData AssetData =
+		AssetRegistryModule.Get().GetAssetByObjectPath(TEXT("/Game/MyPrimaryDataAsset.MyPrimaryDataAsset"));
+
+	if (AssetData.IsValid())
+	{
+		UMyPrimaryDataAsset* Data = Cast<UMyPrimaryDataAsset> (AssetData.GetAsset());
+		UE_LOG(LogTemp, Warning, TEXT("#######  Success %s #######"), *Data->ItemName);	
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("#######  Failed  #######"));
+	}
+```
