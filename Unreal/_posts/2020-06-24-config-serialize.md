@@ -74,6 +74,8 @@ TargetObject->SaveConfig();
 ```
 
 #### 결과 화면
+~/Project/Saved/Config/Windows/Editor.ini에 직렬화된 정보가 다음과 같이 저장된다.
+이제 모든 클래스를 생성시킬 때 디폴트로 다음 정보를 갖고 클래스가 만들어진다.
 ![image-center](/assets/images/unreal-config-serialize-result.png){: .align-left}
 
 
