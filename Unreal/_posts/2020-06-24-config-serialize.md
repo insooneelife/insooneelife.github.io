@@ -74,6 +74,7 @@ TargetObject->SaveConfig();
 ```
 
 #### 결과 화면
+![image-center](/assets/images/unreal-config-serialize-result.png){: .align-left}
 
 
 
