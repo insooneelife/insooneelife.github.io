@@ -84,3 +84,24 @@ void FMyPluginModule::OnIdSelected(FPrimaryAssetId AssetId)
 }
 
 ```
+
+#### Notification Popup
+```c++
+void FMyPluginModule::OnConsoleCommand2()
+{
+	const FText NotificationErrorText = LOCTEXT("MyNotification", "write some text here.");
+		
+	FNotificationInfo Info(NotificationErrorText);
+	Info.ExpireDuration = 5.0f;
+	FSlateNotificationManager::Get().AddNotification(Info);
+}
+```
+
+
+#### Message Dialog
+```c++
+...
+	FMessageDialog::Open(EAppMsgType::Ok, FText::FromString(TEXT("message here!")));
+...
+```
+
