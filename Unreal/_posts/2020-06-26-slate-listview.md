@@ -271,6 +271,7 @@ private:
 
 #### SMyListViewWidget.cpp
 
+```c++
 #include "SMyListViewWidget.h"
 #include "Misc/MessageDialog.h"
 #include "Modules/ModuleManager.h"
@@ -974,6 +975,7 @@ bool SMyListViewWidget::IsCurrentViewType(int ViewType) const
 
 
 #undef LOCTEXT_NAMESPACE
+```
 
 
 
