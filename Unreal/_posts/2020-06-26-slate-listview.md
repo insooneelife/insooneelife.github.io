@@ -7,7 +7,8 @@ categories:
 
 #### Slate List View
 Slate ListView 예제이다.
-
+다음과 같은 ui를 제작할 수 있다.
+![image-center](/assets/images/unreal-list-view-result.png){: .align-left}
 
 #### SMyListViewWidget.h
 ```c++
