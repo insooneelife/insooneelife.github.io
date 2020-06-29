@@ -69,31 +69,51 @@ using UnityEditor;
 public class DataTableEditor : Editor
 {
 	private SerializedProperty weaponDataList;
+	private SerializedProperty armorDataList;
 	private DataTable dataTable;
 
 	void OnEnable()
 	{
 		weaponDataList = serializedObject.FindProperty("weaponDataList");
+		armorDataList = serializedObject.FindProperty("armorDataList");
 		dataTable = (target as DataTable);
 	}
 
 	public override void OnInspectorGUI()
 	{
 		serializedObject.Update();
-		EditorGUILayout.PropertyField(weaponDataList);
 
+		GUIStyle style = EditorStyles.helpBox;
+		GUILayout.BeginVertical(style);
+		EditorGUILayout.PropertyField(weaponDataList, true);
 		if (GUILayout.Button("Generate WeaponData"))
 		{
 			dataTable.weaponDataList.Add(new WeaponData("a", WeaponData.Types.Bow));
 			dataTable.weaponDataList.Add(new WeaponData("b", WeaponData.Types.Spear));
 			dataTable.weaponDataList.Add(new WeaponData("c", WeaponData.Types.TwoHandSword));
 		}
+		GUILayout.EndVertical();
 		
+		
+		GUILayout.BeginVertical(EditorStyles.helpBox);
+		EditorGUILayout.PropertyField(armorDataList, true);
+		if (GUILayout.Button("Generate ArmorData"))
+		{
+			dataTable.armorDataList.Add(new ArmorData("aa", ArmorData.Types.Armor));
+			dataTable.armorDataList.Add(new ArmorData("bb", ArmorData.Types.Shield));
+			dataTable.armorDataList.Add(new ArmorData("cc", ArmorData.Types.Shield));
+		}
+		GUILayout.EndVertical();
+		
+
 		serializedObject.ApplyModifiedProperties();
 
 
 	}
+
 }
 
 ```
 
+
+![image-center](/assets/images/unity-editor-customize-box-layout.png){: .align-left}
