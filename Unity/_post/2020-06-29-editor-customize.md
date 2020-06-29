@@ -10,6 +10,7 @@ categories:
 
 먼저 커스터마이징 대상 스크립트(DataTable.cs)를 작성한다.
 
+#### DataTable.cs
 ```c#
 using System.Collections;
 using System.Collections.Generic;
@@ -56,5 +57,43 @@ public class DataTable : MonoBehaviour
 
 
 
+#### DataTableEditor.cs
+```c#
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEditor;
 
+[CustomEditor(typeof(DataTable))]
+[CanEditMultipleObjects]
+public class DataTableEditor : Editor
+{
+	private SerializedProperty weaponDataList;
+	private DataTable dataTable;
+
+	void OnEnable()
+	{
+		weaponDataList = serializedObject.FindProperty("weaponDataList");
+		dataTable = (target as DataTable);
+	}
+
+	public override void OnInspectorGUI()
+	{
+		serializedObject.Update();
+		EditorGUILayout.PropertyField(weaponDataList);
+
+		if (GUILayout.Button("Generate WeaponData"))
+		{
+			dataTable.weaponDataList.Add(new WeaponData("a", WeaponData.Types.Bow));
+			dataTable.weaponDataList.Add(new WeaponData("b", WeaponData.Types.Spear));
+			dataTable.weaponDataList.Add(new WeaponData("c", WeaponData.Types.TwoHandSword));
+		}
+		
+		serializedObject.ApplyModifiedProperties();
+
+
+	}
+}
+
+```
 
