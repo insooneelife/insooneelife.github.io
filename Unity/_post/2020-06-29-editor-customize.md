@@ -52,6 +52,7 @@ public class DataTable : MonoBehaviour
 일반적으로 커스터마이즈 클래스는 대상이름+Editor 로 네이밍 한다.
 그리고 이 클래스는 Editor라는 폴더 하위에 위치해야 한다.
 
+![image-center](/assets/images/unity-editor-customize-script-position.png){: .align-left}
 
 
 
