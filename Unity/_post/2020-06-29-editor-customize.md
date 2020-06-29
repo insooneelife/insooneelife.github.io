@@ -116,4 +116,4 @@ public class DataTableEditor : Editor
 ```
 
 
-![image-center](/assets/images/unity-editor-customize-box-layout.png){: .align-left}
+
