@@ -115,5 +115,6 @@ public class DataTableEditor : Editor
 
 ```
 
-
+#### 결과 화면
+![image-center](/assets/images/unity-editor-customize-box-layout.png){: .align-left}
 
