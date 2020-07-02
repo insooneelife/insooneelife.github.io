@@ -217,11 +217,11 @@ public class MyAnimController : MonoBehaviour
 
 #### Animation Controller
 컨트롤러는 대충 이렇게 생겼다.
-![image-center](/assets/images/unity-editor-customize-script-position.png){: .align-left}
+![image-center](/assets/images/unity-pathfinding-with-animation-move-animcon.png){: .align-left}
 
 
 #### 결과 화면
 잘 걷는다.
-![image-center](/assets/images/unity-editor-customize-script-position.png){: .align-left}
+![image-center](/assets/images/unity-pathfinding-with-animation-move-result.png){: .align-left}
 
 
