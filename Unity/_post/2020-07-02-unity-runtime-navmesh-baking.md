@@ -21,7 +21,9 @@ NavMeshComponents-master\NavMeshComponents-master\Assets\NavMeshComponents 폴�
 
 나는 기본 Plane을 사용하였다.
 이 GameObject를 Prefab으로 만든다.
-![image-center](/assets/images/unity-editor-customize-script-position.png){: .align-left}
+
+![image-center](/assets/images/unity-runtime-navmesh-baking-plane.png){: .align-left}
+
 이제 이 GameObject를 생성시킬 스크립트를 작성한다.
 
 
@@ -78,7 +80,7 @@ public class MapManager : MonoBehaviour
 
 코드 작성 후 inspector에서 _mapPrefab에 Plane Prefab을 넣는다.
 
-![image-center](/assets/images/unity-editor-customize-script-position.png){: .align-left}
+![image-center](/assets/images/unity-runtime-navmesh-baking-mapmanager.png){: .align-left}
 
 
 코드 실행 후 P 키를 누르면 실시간으로 NavMesh가 생성됨을 확인할 수 있다.
